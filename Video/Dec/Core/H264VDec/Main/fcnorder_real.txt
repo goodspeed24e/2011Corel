@@ -1,0 +1,4 @@
+?TR_RegionBegin_95@@YAXXZ
+?InternalProcessInput@CMP2VDecGMO@@UAGJKPAVIGMediaBuffer@@K_J1@Z
+?InternalProcessOutput@CMP2VDecGMO@@UAGJKKPAU_GMO_OUTPUT_DATA_BUFFER@@PAK@Z
+?TR_RegionEnd_95@@YAXXZ

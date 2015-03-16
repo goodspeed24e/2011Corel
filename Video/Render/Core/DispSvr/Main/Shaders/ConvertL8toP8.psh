@@ -1,0 +1,39 @@
+// Pixel shader to convert L8 and palette to color. (mimick P8 effect)
+
+sampler IndexSampler : TEXTURE0;
+sampler PaletteSampler : TEXTURE1;
+
+struct PS_INPUT
+{
+	float2 tx0 : TEXCOORD0;
+	float2 tx1 : TEXCOORD1;
+	float2 tx2 : TEXCOORD2;
+	float2 tx3 : TEXCOORD3;
+	float2 tx4 : TEXCOORD4;
+};
+
+float4 lookup(float2 tex)
+{
+	// color is at the center of texels thus we shift the index value.
+	float index = tex2D(IndexSampler, tex).x * 255 / 256 + 0.5 / 256;
+	return tex1D(PaletteSampler, index);
+}
+
+// no anti-aliasing
+float4 ConvertL8toP8PS(PS_INPUT input) : COLOR
+{
+	return lookup(input.tx0);
+};
+
+// bi-linear interpolation
+float4 ConvertL8toP8_AA_PS(PS_INPUT input) : COLOR
+{
+	float2 dt = frac(input.tx4);
+
+	float4 c = lerp(
+		lerp(lookup(input.tx0), lookup(input.tx1), dt.x),
+		lerp(lookup(input.tx2), lookup(input.tx3), dt.x),
+		dt.y);
+
+	return c;
+};

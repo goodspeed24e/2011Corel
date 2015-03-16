@@ -1,0 +1,12 @@
+// Pixel shader to merge a side by side texture into Column interleaved output.
+
+sampler2D texture0;
+
+
+float4 MergeSxSColumnInterleaved_PS(float4 texCoord : TEXCOORD0, float4 screenSpace : VPOS) : COLOR
+{
+	float4 leftview = tex2D(texture0, texCoord.xy);
+	float4 rightview = tex2D(texture0, texCoord.zw);
+
+	return (screenSpace.x % 2) ? leftview : rightview;
+};

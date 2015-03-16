@@ -1,0 +1,256 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\SkypeAPIApplication.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\SkypeAPIApplication.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "關於 SkypeAPIApplication"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "SkypeAPIApplication 1.0 版",IDC_STATIC,40,10,119,8,
+                    SS_NOPREFIX
+    LTEXT           "版權所有 (C) 2007",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "確定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_SKYPEAPIAPPLICATION_DIALOG DIALOGEX 0, 0, 400, 323
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "SkypeAPIApplication"
+FONT 9, "宋体"
+BEGIN
+    GROUPBOX        "",IDC_STATIC,7,2,386,313
+    PUSHBUTTON      "1",IDC_BUTTON1,313,38,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "2",IDC_BUTTON2,329,38,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "3",IDC_BUTTON3,347,38,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "4",IDC_BUTTON4,313,54,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "5",IDC_BUTTON5,329,54,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "6",IDC_BUTTON6,347,54,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "7",IDC_BUTTON7,313,70,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "8",IDC_BUTTON8,329,70,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "9",IDC_BUTTON9,347,70,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "*",IDC_BUTTON_XING,313,86,13,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "0",IDC_BUTTON0,329,86,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "#",IDC_BUTTON_JING,347,86,14,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Down",IDC_BUTTON_DOWN,363,54,21,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Up",IDC_BUTTON_UP,363,38,21,14,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Dail",IDC_BUTTON_DIAL,363,86,21,14,0,WS_EX_CLIENTEDGE
+    GROUPBOX        "撥打電話：",IDC_STATIC,309,10,78,93,BS_FLAT
+    GROUPBOX        "選擇聯絡人：",IDC_STATIC,309,108,77,31,BS_FLAT
+    EDITTEXT        IDC_EDITMSGTOSP,17,175,252,14,ES_AUTOHSCROLL | 
+                    ES_NOHIDESEL | ES_WANTRETURN | NOT WS_BORDER,
+                    WS_EX_CLIENTEDGE
+    PUSHBUTTON      "撥打",IDC_BUTTON_CALL,315,153,30,15,0,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "掛斷",IDC_BUTTON_HOOKON,353,153,30,15,0,
+                    WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_DAILNUM,313,20,71,13,ES_AUTOHSCROLL | 
+                    ES_READONLY | ES_WANTRETURN | ES_NUMBER | NOT WS_BORDER,
+                    WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Send",IDC_BUTTON_SENDCOMTOSKYPE,272,175,30,15,0,
+                    WS_EX_CLIENTEDGE
+    GROUPBOX        "發送命令給Skype：",IDC_STATIC,13,163,291,147,BS_FLAT
+    GROUPBOX        "Skype響應及通知：",IDC_STATIC,12,10,292,147,BS_FLAT
+    GROUPBOX        "撥打連絡人：",IDC_STATIC,309,142,77,29,BS_FLAT
+    PUSHBUTTON      "發 送 消 息",IDC_BUTTON_SMSG,313,275,70,15,0,
+                    WS_EX_CLIENTEDGE
+    PUSHBUTTON      "用Skype發送",IDC_BUTTON_SKYPESEND,313,292,70,15,0,
+                    WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_MSGTOFRIEND,314,189,66,83,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | NOT 
+                    WS_BORDER,WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_Message,17,21,283,131,ES_MULTILINE | NOT 
+                    WS_BORDER | WS_VSCROLL,WS_EX_CLIENTEDGE
+    LISTBOX         IDC_COM_LIST,17,193,283,114,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | NOT 
+                    WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,
+                    WS_EX_CLIENTEDGE
+    COMBOBOX        IDC_COMBO_CONTACTS,314,122,69,119,CBS_DROPDOWN | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,
+                    WS_EX_CLIENTEDGE
+    GROUPBOX        "給聯絡人發送消息：",IDC_STATIC,309,177,77,133,BS_FLAT
+    PUSHBUTTON      "HON",IDC_BUTTON_HON,363,69,21,14,0,WS_EX_CLIENTEDGE
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "SkypeAPIApplication \0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "SkypeAPIApplication\0"
+            VALUE "LegalCopyright", "版權所有 (C) 2007\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "SkypeAPIApplication.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "SkypeAPIApplication 應用程式\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_SKYPEAPIAPPLICATION_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 393
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 316
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "關於 SkypeAPIApplication(&A)..."
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\SkypeAPIApplication.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,401 @@
+H264VDec.dll Release Note
+
+[Components][H264VDec][ReleaseNote]:
+
+Ver. 4.5.0.15
+Release Date 2009/12/29
+1. Integrate NV SECOP related code
+2. these B frames before I frame in open GOP can’t get the forward reference frames and then decoded incompletely
+
+Ver. 4.5.0.14
+Release Date 2009/12/17
+1. The base view flag in slice structure doesn't be initialized. It causes slice header parse error.
+2. In PIP disc, when clicking FF and then clicking Play button, there will be a decoder instance constructed and destructed.
+   The root cause is the DPB doesn't initialize and its pointer is NULL.
+
+Ver. 4.5.0.13
+Release Date 2009/12/16
+1. fix bug that the dependent view DPB size is too small.
+2. The memory of offset metadata will release in H264VDec module.
+
+Ver. 4.5.0.12
+Release Date 2009/12/4
+1. Dependent view PTS should be the same with base view PTS.
+2. Modify drop meta data mechanism.
+3. fix bug that we didn't clean the SPS subset "Valid" value when flushing
+
+Ver. 4.5.0.11
+Release Date 2009/12/4
+1. fix problem that base and dependent view have same PPS id, so that we have trouble in function "is_new_picture()"
+
+Ver. 4.5.0.10
+Release Date 2009/12/2
+1. Add DPB size constraints in 3DBD playback
+
+Ver. 4.5.0.9
+Release Date 2009/12/2
+1. add metadata
+
+Ver. 4.5.0.8
+Release Date 2009/11/23
+1. Provide a single thread mode to reduce memory usage in some applications(Neil)
+2. merge 4.2.X CL#579581(Delly)
+3. Add qp information in each mb for field transcoding.(Ivan)
+4. MVC SW mode: fix issues for panasonic streams.(Paco)
+(1). sps Ids of base view and dependent view are same.
+(2). IDR frame of dependent view is not I frame. So we need to flush the dpb for all views at the IDR of base view.
+5. Integrate from CL#580194(Joe)
+6. Fix panasonic corruption issue.(Paco)
+7. Add comment for workaround code(Minie)
+8. MVC: Fix SEI nesting message issue. The payload size should contain the nesting and its following message.(Paco)
+
+Ver. 4.5.0.7
+Release Date 2009/11/09
+1. Fix crash issue for h264 streams if slice number is more then 6.
+2. Fix wrong interview reference frame number in DXVA mode.
+3. Fix h264 crash issue.
+4. Add mb_type in combine_field for field transcoding.
+5. reset the point of bitstream buffer when start to decode one picture
+6. Set invalid uncompress buffer index to 0x7f
+7. Fix drop frame issue.
+
+Ver. 4.5.0.6
+Release Date 2009/10/26
+1. Fix bugs in init_lists and reorder_lists
+
+Ver. 4.5.0.5
+Release Date 2009/10/23
+1. Main MVC DXVA: Flush dpb for all views at EOS.
+2. Main MVC: Fix hang issue in WINDVD for Tiger v3 .3dts.
+
+Ver. 4.5.0.4
+Release Date 2009/10/22
+1. Smart transcoding. Fixed a bug in field re-syntax.
+2. Main MVC SW/DXVA: Use view index instead of view id in dpb.
+3. Fix a fast seeking drop frame issue.
+4. Main MVC: Fix SEI message issue for SPE stream.
+5. Main MVC: Fix drop frame issue for SPE stream.
+
+Ver. 4.5.0.3
+Release Date 2009/10/14
+1. Fix hang issue caused by drop frame mechanism
+
+Ver. 4.5.0.2
+Release Date 2009/10/14
+1. MVC decoder is ready
+
+Ver. 4.5.0.1
+Release Date 2009/08/25
+1. Modify IsScramblingRequired() of ivicp to query information only
+
+Ver. 4.0.0.11
+Release Date 2009/07/25
+1. Workaround for some intel platform(GM45 with 2nd_Context) on trick mode, use lock/Unlock to sync d3d surface.
+
+Ver. 4.0.0.10
+Release Date 2009/07/21
+1. Remove OutputDebugString in release version of modules.
+2. Update ISMP version to 1.0.0.26.
+
+Ver. 4.0.0.9
+Release Date 2009/07/17
+1. Reset m_pStream as NULL at Close() and then will avoid this crash at Set() that before first Play().
+
+Ver. 4.0.0.8
+Release Date 2009/07/15
+1. Add a new smart_dec level 7 to provide bit-by-bit conformance test.
+   Original 0 will remove critical section to improve performance.
+
+Ver. 4.0.0.7
+Release Date 2009/07/15
+1. Add different sps_is_equal levels to avoid lost to decode some frames.
+2. Add EOS process when receive EOS NALU on playback
+
+Ver. 4.0.0.6
+Release Date 2009/07/06
+1. Drop all slice in trick mode when the source is interlaced field.
+
+Ver. 4.0.0.5
+Release Date 2009/06/23
+1. Remove TR macros that are in decoding process.
+2. Fixed currption bug when playing back a title; check refcount before releasing decoded frame
+
+Ver. 4.0.0.4
+Release Date 2009/06/05
+1. Need to re-InitDPB after FlushDPB to avoid fail in error check.
+2. scramble data first then fill in into residual data buffer.
+3. Fix crash issue on previous on CL#543592 due to dropframe manager not existed.
+
+Ver. 4.0.0.3
+Release Date 2009/06/01
+1. Add a fast seeking frame function.
+
+Ver. 4.0.0.2
+Release Date 2009/05/13
+1. If PTS have negative value and sent to render, it will cause unexpected behavior. So modify it to 3003 as default value.
+
+Ver. 4.0.0.1
+Release Date 2009/04/14
+1. Add DisableThreadLibraryCalls() into DllMain() to improve DLL performance.
+
+************************************************************
+Ver. 3.0.1.12
+Release Date 2009/04/10
+1. Fix crash and video corruption issue due to lost to decoded some frame data.
+
+Ver. 3.0.1.11
+Release Date 2009/04/03
+1. Fix backward compatible issue.
+
+Ver. 3.0.1.10
+Release Date 2009/04/03
+1. Integrate the new IVICP SDK.
+
+Ver. 3.0.1.9
+Release Date 2009/03/25
+1. Modify the check condition to avoid duplicate release the same UnCompressed buffer item.
+2. Avoid black screen on some very short titles.
+
+Ver. 3.0.1.8
+Release Date 2009/03/19
+1. Modify H.264 DXVA VLD mode to avoid the effect of getting wrong SPS ID, including Vista and XP.
+
+Ver. 3.0.1.7
+Release Date 2009/03/19
+1. Update the latest LibLine21Dec library and integrate into decoder.
+2. Fix crash issue on FF/FR behavior due to bSkip flag be reset.
+3. Add dwDisplayWidth and dwDisplayHeight in H264VFrameEx to divide decoded width/height and display width/height.
+
+Ver. 3.0.1.6
+Release Date 2009/03/17
+1. Fix crash issue due to uncompressed item resource leakage after many seek behaviors.
+
+Ver. 3.0.1.5
+Release Date 2009/03/11
+1. Force no video drop on DXVA VLD mode to avoid video corruption issue.
+2. Skip discontinuity data and don't send into driver.
+
+Ver. 3.0.1.4
+Release Date 2009/02/24
+1. Fix CC can't be showed on DXVA mode.
+
+Ver. 3.0.1.3
+Release Date 2009/01/20
+1. Use the same route as Nvidia as S3 DXVA1
+2. Fix PTS invaild issue. Got a PTS and then do memset() to 0.
+3. Fix no flush all frame when EOS.
+4. Fix crash and hang issue on data discontinuity status.
+
+Ver. 3.0.1.2
+Release Date 2009/01/07
+1. Just store picture to dpb once and execute the picture.
+2. Add BeginFrame to check the uncompression buffer status for AMD VLD.
+3. Add error handling on DXVA VLD mode.
+4. Fix wrong PTS order issue. Refine PTS queue scheme to let PTS can be got from GetAnnexB().
+5. Update H264VDec document for 3.X version DLL.
+
+Ver. 3.0.1.1
+Release Date 2008/12/25
+1. buf_begin should not be zero, if yes, skip this frame on SDK interface.
+2. Fix IDROnly bitstream on SDK interface.
+3. Delete fcnorder.txt.
+4. Update TRSDK version to 1.0.0.14.
+5. Make a backward compitable structure for VIO.
+
+Ver. 3.0.0.6
+Release Date 2008/12/22
+1. Change "H264_PROPID_CB_GET_IVICP" to "H264_PROPID_CB_CHANGE_RESOLUTION" and modify to match this change.
+2. Use another frame index if frame index that we have gotten for decoding frame is still drawing.
+
+Ver. 3.0.0.5
+Release Date 2008/12/05
+1. Fix buf_begin pointer descramble error issue.
+2. Fix hang issue on some error bitstream and continue switching with mpeg-2 content.
+3. Update Line21Dec related libs.
+4. Fix video corruption issue on Reference-B Field coding content.
+5. Update the latest Line21Dec lib. Let CC1 and CC2 put together on the same CC Field.
+6. Rename folder name "H264VDecTest" to "BlackBoxTest".
+7. Integrate from 2.X branch version 2.0.1.20.
+
+Ver. 3.0.0.4
+Release Date 2008/09/01
+1. Add dynamic pick for C and assembly code.
+2. Integrate ATIEXT info.
+3. Fix video corruption issue due to drop frame mistake.
+4. Close miss-closed handle.
+5. correct implementation of bool operator in GMOHelper.h.
+6. Modify a check condition to avoid malloc unknown size buffer.
+7. Add the missing SSE functions for dynamic pick.
+8. Integrate GMO.
+9. Fix animals corruption issue on DXVA1 VLD mode.
+10. Fix animals corruption issue on Intel DXVA2 VLD mode(long format).
+11. Fix crash issue due to buf_begin pointer not descrambled.
+
+Ver. 3.0.0.3
+Release Date 2008/08/05
+1. Add WaitForSingleObject() on thread handle.
+2. Add namespace on H264VDec.
+3. SSE support.
+4. Fix some memory and resource leakage issues.
+
+Ver. 3.0.0.2
+Release Date 2008/07/24
+1. Fix DXVA memory leakage.
+2. Modify PFN_H264HP_GET_PARAM arguments.
+
+Ver. 3.0.0.1
+Release Date 2008/07/23
+1. Fixed a crash issue at Caption buffer when playback Brazil ISDB-T error stream.
+2. Add SSE support on some functions.
+3. Modify new IH264VDec.h. Add 32 reserved DWORD and refine data structure.
+4. Delete unused files atih264.cpp, nvh264_mcp.cpp, dxva_base.cpp and dxva_base.h.
+5. Add m_guidConfigBitstreamEncryption to get correct DXVA Info.
+6. Add new GetParamCallback function. Now it will handle change IviCP pointer only.
+
+************************************************************
+Ver. 2.0.0.24
+Release Date 2008/07/18
+1. Fixed a crash bug when playing ISDB-T Brazil error stream.
+2. Fix crash issue on IDROnly bitstream.
+3. Remove "_USE_TR_" definition.
+
+Ver. 2.0.0.23
+Release Date 2008/07/17
+1. Fixed a crash bug at error stream.
+2. Resolved no video output issue for several ISDB-T streams from Brazil.
+3. Let Skip Frame can work on VLD mode.
+4. Fix PTS assign error H264 GMO decoder.
+
+Ver. 2.0.0.22
+Release Date 2008/07/15
+1. Remove s static value "slice_num" on Intel VLD path.
+2. Update new HVDService.h.
+
+Ver. 2.0.0.21
+Release Date 2008/07/09
+1. Remove boost related files under Imports. Now it will link to installer package.
+2. Add vc9 version of loki library.
+3. Fixed bugs for pure C support.
+
+Ver. 2.0.0.20
+Release Date 2008/07/01
+1. Add VC9 version of Line21Dec library.
+2. Remove GMO.lib link.
+3. Update HVDService.h.
+4. Fix wrong statement and fix function of dump buffer.
+5. Update Line21Dec vc8 and vc9 library.
+6. Fix crash issue on Intel DXVA VLD mode.
+7. Fix DXVA VLD hang issue on trick mode.
+8. Support DXVA DShow playback.
+
+Ver. 2.0.0.19
+Release Date 2008/06/25
+1. Fix video shaking issue on FF over 4x then normal play.
+2. Fix crash issue on CCBuf null pointer.
+
+Ver. 2.0.0.18
+Release Date 2008/06/20
+1. Refine DXVA1/2 structure.
+2. Fix video corruption issue on H264 MC level DXVA with Nvidia vga card.
+3. Add VC9(Visual Studio 2008) solution and project files.
+
+Ver. 2.0.0.17
+Release Date 2008/06/16
+1. Update HVDService.h
+2. Add a check to avoid crash due to m_is_MTMS is not set.
+
+Ver. 2.0.0.16
+Release Date 2008/06/13
+1. Fix some error on DXVA1 and DXVA2 implementation.
+2. Enable _XMM_COPY_ on dpb_split_XXX and dpb_combine_XXX to improve performance about 0~2%.
+3. Fix unexpected crash issue due to send wrong data, the last frame, to HW.
+4. Fix DXVA hang issue due to GetItem() and compressed buffers are not released on field coding content seeking.
+5. Refine current DXVA related structure.
+
+Ver. 2.0.0.15
+Release Date 2008/06/10
+1. Fix black screen or crash issue on change different resolution content.
+2. Fix still playback in a while after seek.
+3. Fix crash issue due to DPB size error on some cases.
+
+Ver. 2.0.0.14
+Release Date 2008/06/06
+1. Fix MC level DXVA1 decoding on using HVDService.
+2. Remove coefficients plane for non-ref B-picture targeted image strucutre, save about 25% ~ 30% memory cost for all multi-threads model.
+3. Fix H264 VLD level DXVA1 decoding on using HVDService.
+4. Add new aspect_ratio_idc = 14, 15, and 16.
+
+Ver. 2.0.0.13
+Release Date 2008/06/03
+1. Update HVDService.h on H264VDec.
+2. Fix compiler error due to HVDService.h change.
+
+Ver. 2.0.0.12
+Release Date 2008/06/03
+1. Fixed re-definition link error @iviMediaTypeGuids.h.
+2. Move TR out of Imports, but still inside decoder.
+3. Fix can't output frame when receive EOS NALU.
+
+Ver. 2.0.0.11
+Release Date 2008/05/30
+1. Fix hang issue due to two working read_ip finish timing error on Reference-B case.
+2. Change macroblock_s mb_type from INTRA/INTER flag to real mb_type just copied from macroblock mb_type. For transcoder data usage.
+3. Output macroblock information for transcoder.
+4. Fixed a hang issue for wrong B-collection at Non-SeekI re-entry point.
+5. Fix crash issue on check weighted-prediction frame error.
+6. Modify PTS control to more make sense.
+
+Ver. 2.0.0.10
+Release Date 2008/05/29
+1. Fixed hang and crash issue for reference-B case, pass all local test suite.
+2. Add new function UpdatePTS() to unify all PTS control.
+3. Fix PTS update timing error.
+
+Ver. 2.0.0.9
+Release Date 2008/05/28
+1. Fix crash issue on lost one field in one Frame.
+2. Remove unnecessary sleep(500), that is a workaround for old bugs.
+3. Add new h264dxva1.cpp and h264dxva1.h to support HVDService DXVA1.
+   It still can't work now due to HVDService DXVA1 part is not ready.
+4. Remove active_sps.frame_mbs_only_flag to decide progressive frame.
+5. Fix change resolution issue on PIP content.
+6. Fix hang issue on corrupted Reference-B frame.
+
+Ver. 2.0.0.8
+Release Date 2008/05/26
+1. Fixed one crash error in H264 HP Decoder in error case
+
+Ver. 2.0.0.7
+Release Date 2008/05/23
+1. Ported ER from GMO branch to non-GMO branch;  Multislice Multithread part
+2. Fixed bugs in multithread mode run-time change. (Even without error]
+3. Refine H264 SDK folder structure.
+
+Ver. 2.0.0.6
+Release Date 2008/05/19
+1. Merge ER related codes from Main tree to Components tree.
+2. Fix corruption caused by that the first or latest slice of P, B frames is I slice.
+3. Fix corruption caused by weighted prediction on MBAFF bitstream in MC and IT mode.
+4. Modify HVDService.h to match HVDService export header on Components tree and WinDVD10 main tree.
+5. Fix some TR related issues.
+6. Port recent ER check-in from GMO branch to non-GMO branch. Only cover Single Slice Multi-thread mode.
+
+Ver. 2.0.0.5
+Release Date 2008/05/07
+NA
+
+Ver. 2.0.0.4
+Release Date 2008/04/16
+NA
+
+Ver. 2.0.0.3
+Release Date 2008/04/11
+NA
+
+Ver. 2.0.0.2
+Release Date 2008/03/11
+NA
+
+Ver. 2.0.0.1
+NA
+NA

@@ -1,0 +1,60 @@
+Ver. 1.0.0.9
+Release Date 2008/08/26
+1. Fix Unlock issue in [iviTR_TREXE2_CallScrambl] issue that 
+   in multi-thread run-time re-scramble may cause App hang.
+   Update file: IVIScramble.h
+2. Fix [iviTR_DETECT_PRINTEXCEPTION] macro issue that
+   when use it with [iviTR_Crash] cause compiler error.
+   Update file: IVIAntidebug2.h / LibTR.lib / LibTR_mt.lib    
+
+Ver. 1.0.0.8
+Release Date 2008/08/18
+1. Fix working flow of TREXE.exe on checksum cross regions with each other, 
+   may cause checksum value error.
+2. Update [iviTRFunction] section in TRLink.ini.
+
+Ver. 1.0.0.7
+Release Date 2008/08/13
+1. Add iviTR_RE_ENCRYPT_ALLOCATED_TCHAR macro.
+2. Add Warning message in TREnvAddin.
+3. Add Create Sample header file in TREnvAddin.
+4. Fix TREXE.exe crash while eliminating Sysmbol.
+5. Fix TR interface to fit standard C requirement.
+
+Ver. 1.0.0.6
+Release Date 2008/08/08
+1. Add iviTR_CONST_REVERSE_STR macro
+2. Fix iviTR_ENCRYPT_CONTENT for backward-compatible
+3. Add iviTR_ALLOCATE_ENCRYPTED_TCHAR macro
+
+Ver. 1.0.0.5
+Release Date 2008/08/06
+1. Change parameter in iviTR_ENCRYPT_CONENT.
+2. Apply Themida v.2.0.1.0 on SQPlus.
+3. Add default dummy Libs in CommonFiles\Corel\TRSDK\Lib.
+4. Append version in TRSDK installer name.
+
+Ver. 1.0.0.4
+Release Date 2008/07/25
+1. Enable TREXE2 macro.
+2. Add "IVIScrambleOff.h".
+3. Remove <list> in header.
+4. Add namespace LIBTR.
+5. Add debug log switch to TR tools (TR compiler, TR Linker).
+6. Add "TRLinker.ini" file.
+7. Add iviTR_VERIFY_SYSER_ENGINE, iviTR_VERIFY_SYSER_SYSERBOOT, iviTR_DETECT_PRINTEXCEPTION.
+8. Add iviTR_CHECK_INT2D, iviTR_MODULE_HIDING.
+9. Add iviTRTool_XOR in tool folder
+10. Add Visual Studio version detection in TR_EnvAddin
+
+Ver. 1.0.0.3
+Release Date 2008/07/11
+1. Modify installed SQPlus.dll path
+
+Ver. 1.0.0.2
+Release Date 2008/07/10
+1. First trigger build for local test
+
+Ver. 1.0.0.1
+Release Date 2008/07/10
+1. None

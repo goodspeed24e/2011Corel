@@ -1,0 +1,22 @@
+#//////////////////////////////////////////////////////////////////////////////////////
+#// EnvMake auto-generated file
+#//////////////////////////////////////////////////////////////////////////////////////
+EnvMakeAutoSet:
+#////////// Reset TR & TRSDK_BIN //////////
+	set TRSDK=
+	set TRSDK_BIN=
+#////////// Reset TR & TRSDK_BIN //////////
+	@echo set TRSDK=1.0.x.x
+	set TRSDK=1.0.x.x
+	@echo set PATH=$(SSROOTDIR)\Imports\Bin\TRSDK_V1\;%%PATH%%
+	set PATH=$(SSROOTDIR)\Imports\Bin\TRSDK_V1\;%%PATH%%
+	@echo set EV_iviTR_FNOG_RUN=1
+	set EV_iviTR_FNOG_RUN=1
+	@echo set EV_iviTR_FNOG_AUTOFIX_BUILD=0
+	set EV_iviTR_FNOG_AUTOFIX_BUILD=0
+	@echo set EV_iviTR_FNOG_VERIFY_MAP=1
+	set EV_iviTR_FNOG_VERIFY_MAP=1
+	@echo set EV_iviTR_FNOG_RUN_TREXE=0
+	set EV_iviTR_FNOG_RUN_TREXE=0
+	@echo set EV_iviTR_FNOG_SEED=302394
+	set EV_iviTR_FNOG_SEED=302394

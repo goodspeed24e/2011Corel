@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EventListenerTest", "EventListenerTest.vcproj", "{D029A7D2-079F-4C91-85DE-1CF0D546086D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EventListenerBoostTest", "EventListenerBoostTest\EventListenerBoostTest.vcproj", "{BB387B8B-709E-45E0-87D4-775BC1E57E7C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D029A7D2-079F-4C91-85DE-1CF0D546086D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D029A7D2-079F-4C91-85DE-1CF0D546086D}.Debug|Win32.Build.0 = Debug|Win32
+		{D029A7D2-079F-4C91-85DE-1CF0D546086D}.Release|Win32.ActiveCfg = Release|Win32
+		{D029A7D2-079F-4C91-85DE-1CF0D546086D}.Release|Win32.Build.0 = Release|Win32
+		{BB387B8B-709E-45E0-87D4-775BC1E57E7C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BB387B8B-709E-45E0-87D4-775BC1E57E7C}.Debug|Win32.Build.0 = Debug|Win32
+		{BB387B8B-709E-45E0-87D4-775BC1E57E7C}.Release|Win32.ActiveCfg = Release|Win32
+		{BB387B8B-709E-45E0-87D4-775BC1E57E7C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

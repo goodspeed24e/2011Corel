@@ -1,0 +1,25 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    uuid(9D8CB470-2938-45bd-B0D0-95F825BD8809),
+    version(1.0),
+    helpstring("DispSvrDbg 1.0 Type Library")
+]
+library DispSvrDbgLib
+{
+	importlib("stdole32.tlb");
+
+	[
+		object,
+		uuid(10ECCEAC-EE07-48bb-B2BA-0658351A8355),
+		oleautomation,
+		dual
+	]
+	interface IDispSvrDbg : IUnknown
+	{
+		HRESULT GetDispSvrVersion([out] BSTR *bstrVer);
+		HRESULT SetInitFlags([in] DWORD dwData);
+		HRESULT GetInitFlags([out] DWORD *pdwData);
+	};
+};

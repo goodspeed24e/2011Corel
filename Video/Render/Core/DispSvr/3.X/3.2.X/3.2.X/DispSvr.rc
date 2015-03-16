@@ -1,0 +1,125 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "2 TYPELIB ""DispSvr.tlb""\r\n"
+    "\0"
+END
+
+4 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""DispSvrDbg.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+// include version.h to use IVI_MAJOR_VERSION & etc macros.
+#include "version.h"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION IVI_MAJOR_VERSION,IVI_MINOR_VERSION,IVI_BUILD,IVI_FIX
+ PRODUCTVERSION IVI_MAJOR_VERSION,IVI_MINOR_VERSION,IVI_BUILD,IVI_FIX
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Display Server for 3DBD"
+            VALUE "CompanyName", "Corel Corp."
+            VALUE "FileDescription", "Helper library implementing custom allocator-presenter for Video Mixing Renderer 9 in a multi-graph environment"
+            VALUE "FileVersion", STRINGIFY(IVI_MAJOR_VERSION) "." STRINGIFY(IVI_MINOR_VERSION) "." STRINGIFY(IVI_BUILD) "." STRINGIFY(IVI_FIX) "\0"
+            VALUE "InternalName", "DispSvr.dll"
+            VALUE "LegalCopyright", "Copyright (c) Corel Corp. All rights reserved."
+            VALUE "OriginalFilename", "DispSvr.dll"
+            VALUE "ProductName", "DispSvr for 3DBD"
+            VALUE "ProductVersion", STRINGIFY(IVI_MAJOR_VERSION) "." STRINGIFY(IVI_MINOR_VERSION) "." STRINGIFY(IVI_BUILD) "." STRINGIFY(IVI_FIX) "\0"
+            VALUE "OLESelfRegister", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "DispSvr"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "DispSvrDbg.tlb"
+
+2 TYPELIB "DispSvr.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

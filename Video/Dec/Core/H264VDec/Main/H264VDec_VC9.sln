@@ -1,0 +1,86 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "H264VDec", "H264VDec_VC9.vcproj", "{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4224B334-1822-46AA-AEC4-15E20E1CC955} = {4224B334-1822-46AA-AEC4-15E20E1CC955}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "H264VDecTest", "H264VDec\BlackBoxTest\H264VDecTest_VC9.vcproj", "{97F3C547-5278-4878-9E3A-A3A9B12596E3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3} = {4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WhiteBoxTest", "H264VDec\WhiteBoxTest\WhiteBoxTest_VC9.vcproj", "{F463C142-3278-4606-9AFD-714795457EC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562} = {0329E90A-8C27-4205-AA7B-6A4B415A4562}
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3} = {4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibUnitTest", "LibUnitTest\LibUnitTest_VC9.vcproj", "{0329E90A-8C27-4205-AA7B-6A4B415A4562}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LIBTR", "LibTRService\LIBTR_VC9.vcproj", "{4224B334-1822-46AA-AEC4-15E20E1CC955}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Static MFC|Win32 = Debug Static MFC|Win32
+		Debug|Win32 = Debug|Win32
+		Release DLL|Win32 = Release DLL|Win32
+		Release Static MFC|Win32 = Release Static MFC|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Debug Static MFC|Win32.ActiveCfg = Debug|Win32
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Debug Static MFC|Win32.Build.0 = Debug|Win32
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Debug|Win32.Build.0 = Debug|Win32
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Release DLL|Win32.ActiveCfg = Release|Win32
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Release DLL|Win32.Build.0 = Release|Win32
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Release Static MFC|Win32.ActiveCfg = Release|Win32
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Release Static MFC|Win32.Build.0 = Release|Win32
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Release|Win32.ActiveCfg = Release|Win32
+		{4216B252-B6B6-4CF8-8C8E-D3D0CFD1F0C3}.Release|Win32.Build.0 = Release|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Debug Static MFC|Win32.ActiveCfg = Debug|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Debug Static MFC|Win32.Build.0 = Debug|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Debug|Win32.Build.0 = Debug|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Release DLL|Win32.ActiveCfg = Release|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Release DLL|Win32.Build.0 = Release|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Release Static MFC|Win32.ActiveCfg = Release|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Release Static MFC|Win32.Build.0 = Release|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Release|Win32.ActiveCfg = Release|Win32
+		{97F3C547-5278-4878-9E3A-A3A9B12596E3}.Release|Win32.Build.0 = Release|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Debug Static MFC|Win32.ActiveCfg = Debug|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Debug Static MFC|Win32.Build.0 = Debug|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Debug|Win32.Build.0 = Debug|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Release DLL|Win32.ActiveCfg = Release|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Release DLL|Win32.Build.0 = Release|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Release Static MFC|Win32.ActiveCfg = Release|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Release Static MFC|Win32.Build.0 = Release|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Release|Win32.ActiveCfg = Release|Win32
+		{F463C142-3278-4606-9AFD-714795457EC7}.Release|Win32.Build.0 = Release|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Debug Static MFC|Win32.ActiveCfg = Debug|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Debug Static MFC|Win32.Build.0 = Debug|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Debug|Win32.Build.0 = Debug|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Release DLL|Win32.ActiveCfg = Release|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Release DLL|Win32.Build.0 = Release|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Release Static MFC|Win32.ActiveCfg = Release|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Release Static MFC|Win32.Build.0 = Release|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Release|Win32.ActiveCfg = Release|Win32
+		{0329E90A-8C27-4205-AA7B-6A4B415A4562}.Release|Win32.Build.0 = Release|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Debug Static MFC|Win32.ActiveCfg = Debug Static MFC|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Debug Static MFC|Win32.Build.0 = Debug Static MFC|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Debug|Win32.Build.0 = Debug|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Release Static MFC|Win32.ActiveCfg = Release Static MFC|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Release Static MFC|Win32.Build.0 = Release Static MFC|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Release|Win32.ActiveCfg = Release|Win32
+		{4224B334-1822-46AA-AEC4-15E20E1CC955}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

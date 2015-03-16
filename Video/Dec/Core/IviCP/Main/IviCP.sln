@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IviCP", "IviCP.vcproj", "{7937E8FE-CDC2-4B7B-939E-E771427A7D8E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestProgram", "TestProgram\TestProgram.vcproj", "{041DB158-F953-494A-BD35-A2596244A839}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7937E8FE-CDC2-4B7B-939E-E771427A7D8E} = {7937E8FE-CDC2-4B7B-939E-E771427A7D8E}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7937E8FE-CDC2-4B7B-939E-E771427A7D8E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7937E8FE-CDC2-4B7B-939E-E771427A7D8E}.Debug|Win32.Build.0 = Debug|Win32
+		{7937E8FE-CDC2-4B7B-939E-E771427A7D8E}.Release|Win32.ActiveCfg = Release|Win32
+		{7937E8FE-CDC2-4B7B-939E-E771427A7D8E}.Release|Win32.Build.0 = Release|Win32
+		{041DB158-F953-494A-BD35-A2596244A839}.Debug|Win32.ActiveCfg = Debug|Win32
+		{041DB158-F953-494A-BD35-A2596244A839}.Debug|Win32.Build.0 = Debug|Win32
+		{041DB158-F953-494A-BD35-A2596244A839}.Release|Win32.ActiveCfg = Release|Win32
+		{041DB158-F953-494A-BD35-A2596244A839}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

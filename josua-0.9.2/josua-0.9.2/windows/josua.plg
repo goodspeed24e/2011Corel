@@ -1,0 +1,40 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: josua - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\pkyy\LOCALS~1\Temp\RSP61.tmp" with contents
+[
+osipfsm.lib osipparser.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/josua.pdb" /debug /machine:I386 /out:"../../Bin/Debug/josua.exe" /pdbtype:sept /libpath:"../../libosip-0.9.2/windows/Debug" 
+".\Debug\callbackuac.obj"
+".\Debug\callbackuas.obj"
+".\Debug\dialog.obj"
+".\Debug\josua.obj"
+".\Debug\msg_req.obj"
+".\Debug\msg_resp.obj"
+".\Debug\port_net.obj"
+".\Debug\rcfile.obj"
+".\Debug\streams.obj"
+".\Debug\tcp_tl.obj"
+".\Debug\transaction_mt.obj"
+".\Debug\ua_core.obj"
+".\Debug\ualogic.obj"
+".\Debug\udp_send.obj"
+".\Debug\udp_tl.obj"
+"\Documents and Settings\pkyy\桌面\sip\sip软件电话源码\libosip-0.9.2\windows\Debug\osipparser.lib"
+"\Documents and Settings\pkyy\桌面\sip\sip软件电话源码\libosip-0.9.2\windows\Debug\osipfsm.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\pkyy\LOCALS~1\Temp\RSP61.tmp"
+<h3>Output Window</h3>
+Linking...
+
+
+
+<h3>Results</h3>
+josua.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

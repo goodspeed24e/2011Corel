@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HVDService", "HVDService_VC9.vcproj", "{9C3090B1-636B-47FD-99A1-2B24C3490CE6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7} = {4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibGPU", "Imports\LibGPU\LibGPU_VC9.vcproj", "{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_Unicode|Win32 = Debug_Unicode|Win32
+		Debug|Win32 = Debug|Win32
+		Release_Unicode|Win32 = Release_Unicode|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C3090B1-636B-47FD-99A1-2B24C3490CE6}.Debug_Unicode|Win32.ActiveCfg = Debug|Win32
+		{9C3090B1-636B-47FD-99A1-2B24C3490CE6}.Debug_Unicode|Win32.Build.0 = Debug|Win32
+		{9C3090B1-636B-47FD-99A1-2B24C3490CE6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9C3090B1-636B-47FD-99A1-2B24C3490CE6}.Debug|Win32.Build.0 = Debug|Win32
+		{9C3090B1-636B-47FD-99A1-2B24C3490CE6}.Release_Unicode|Win32.ActiveCfg = Release|Win32
+		{9C3090B1-636B-47FD-99A1-2B24C3490CE6}.Release_Unicode|Win32.Build.0 = Release|Win32
+		{9C3090B1-636B-47FD-99A1-2B24C3490CE6}.Release|Win32.ActiveCfg = Release|Win32
+		{9C3090B1-636B-47FD-99A1-2B24C3490CE6}.Release|Win32.Build.0 = Release|Win32
+		{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}.Debug_Unicode|Win32.ActiveCfg = Debug_Unicode|Win32
+		{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}.Debug_Unicode|Win32.Build.0 = Debug_Unicode|Win32
+		{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}.Debug|Win32.Build.0 = Debug|Win32
+		{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}.Release_Unicode|Win32.ActiveCfg = Release_Unicode|Win32
+		{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}.Release_Unicode|Win32.Build.0 = Release_Unicode|Win32
+		{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}.Release|Win32.ActiveCfg = Release|Win32
+		{4E2A63A7-17E3-47FE-B0E9-0D7D12606EA7}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

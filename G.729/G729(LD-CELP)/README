@@ -1,0 +1,112 @@
+Here is a C source for LD-CELP (G.728). It was implemented in summer
+of 1993 mainly as a test for Analog Devices C compiler for 21020 and
+as a learning project. It has NOT been tested with the official test
+vectors, but it works on Sparc and 21020. 
+
+I'll appreciate your feedback, bug reports and fixes.
+Enjoy.
+
+Alex Zatsman,     Analog Devices, Inc., (617) 461-3729
+alex.zatsman@analog.com
+
+------------------------------------------------------
+
+This program   implements Low-Delay CELP (CCITT  Recommendation G.728)
+algorithm.  The program  has NOT been  tested  with the official CCITT
+test data,  and  neither  the author (Alex  Zatsman) nor its empoloyer
+(Analog  Device, Inc.) gives any  warranty  or accepts any liabilities
+for this implementation which is distributed as is.
+
+The Sparc version is implemented as two separate  executables: encoder
+(ccelp) and decoder  (dcelp).  These must be built  by  GNU C compiler
+(gcc) because the source uses GNU C extension.  In particular, the "{(
+... )}" construct is used in several places (fast.h)
+
+The  Sparc version  reads inputs  from  Sun audio  files (8-bit  u-low
+encoded). It writes out the indices into a file using 2 bytes for each
+10-bit index. Thus the reduction in file size is  2.5x  (instead of 4x
+for 8-bit source).
+
+The program     also   runs   in    real  time  (half-duplex)    as  a
+single-executable play-back demo  on  EZ-LAB board with ADSD21020 chip
+(both by Analog  Devices, Inc.).  This executable is  built by  Analog
+Devides g21k C compiler (port of gcc to 21k).  It  can record up  to 1
+minute of speech in 25000 words of memory on EZ-LAB  (each word  is 40
+bits, 4 indices per word).
+
+
+To build Sparc executables:
+
+	make ccelp dcelp
+
+To build 21k executable (for EZ-LAB):
+	
+	make ezplay.exe
+
+Note that the g21k compiler with other software tools (assembler,
+linker, etc) from Analog Devices is needed to build ezplay.exe.
+
+
+		List of Sources:
+
+adapters.c:	
+	Synthesis Filter Adapter,
+	Perceptual Weighting Filter Adapter
+	Gain Adapter.
+
+cmain.c:	Main routine for coder.
+	
+codebook.c:	Function for Codebook Search and Access.
+
+data.c:
+		Codebook (shapes and gains)
+		Hybrid Window Coefficients for:
+			Gain Adapter
+			Perceptual Weighting Filter Adapter
+			Synthesis Filter Adapter	
+
+dmain.c:	Main routine for decoder.
+
+ezplay.c:	Main routine for ADSP21020 EZ-LAB demo
+
+filters.c:	
+		Perceptual Weighting Filter
+		Gain Predictor
+		Synthesis Filter
+
+global.c:	Variables common for coder and decoder.
+
+io-sparc.c:	Non-21020 (file) I/O routines. Actually NOT specific
+		to Sparc machine.
+
+postfil.c:	Postfilter and its Adapter.
+
+
+020_hdr.asm:	Run-time header      for ADSP21020.
+
+cbindex.asm:	Fast codebook search for ADSP21020.
+
+fio21k.asm:	Fast I/O             for ADSP21020
+
+
+21kflags.h:	C struct definitions for special registers of ADSP21020
+
+cbindex.h:	Definitions for cbindex.asm
+
+common.h:	Common definitions used in most files
+
+data.h:		
+		Derivatives from gain codebook.
+		Coefficients for low-pass IIR filter (in postfilter)
+
+fast.h:		Some C macros which translate into more efficient code
+		for ADSP21000
+
+parm.h:		Various parameters of LD-CELP (vector size, frame
+		size, etc)
+
+prototyp.h:	Most function prototypes.
+
+qsize.h:	Size of the I/O buffer (queue). It is separated
+		because it is included in some .asm files which don't
+		like more sophisticated C macros.

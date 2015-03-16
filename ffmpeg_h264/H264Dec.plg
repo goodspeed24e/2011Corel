@@ -1,0 +1,154 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: H264Dec - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\luhanyu\LOCALS~1\Temp\RSP2C.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "HAVE_AV_CONFIG_H" /FR"Debug/" /Fp"Debug/H264Dec.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\ti_projects\ffmpeg_h264_vc\allcodecs.c"
+"E:\ti_projects\ffmpeg_h264_vc\cabac.c"
+"E:\ti_projects\ffmpeg_h264_vc\common.c"
+"E:\ti_projects\ffmpeg_h264_vc\dsputil.c"
+"E:\ti_projects\ffmpeg_h264_vc\error_resilience.c"
+"E:\ti_projects\ffmpeg_h264_vc\golomb.c"
+"E:\ti_projects\ffmpeg_h264_vc\h264.c"
+"E:\ti_projects\ffmpeg_h264_vc\imgconvert.c"
+"E:\ti_projects\ffmpeg_h264_vc\jrevdct.c"
+"E:\ti_projects\ffmpeg_h264_vc\mem.c"
+"E:\ti_projects\ffmpeg_h264_vc\mpegvideo.c"
+"E:\ti_projects\ffmpeg_h264_vc\parser.c"
+"E:\ti_projects\ffmpeg_h264_vc\simple_idct.c"
+"E:\ti_projects\ffmpeg_h264_vc\utils.c"
+"E:\ti_projects\ffmpeg_h264_vc\vp3dsp.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\luhanyu\LOCALS~1\Temp\RSP2C.tmp" 
+Creating temporary file "C:\DOCUME~1\luhanyu\LOCALS~1\Temp\RSP2D.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/H264Dec.pdb" /debug /machine:I386 /out:"Debug/H264Dec.exe" /pdbtype:sept 
+.\Debug\allcodecs.obj
+.\Debug\cabac.obj
+.\Debug\common.obj
+.\Debug\dsputil.obj
+.\Debug\error_resilience.obj
+.\Debug\golomb.obj
+.\Debug\h264.obj
+.\Debug\imgconvert.obj
+.\Debug\jrevdct.obj
+.\Debug\mem.obj
+.\Debug\mpegvideo.obj
+.\Debug\parser.obj
+.\Debug\simple_idct.obj
+.\Debug\utils.obj
+.\Debug\vp3dsp.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\luhanyu\LOCALS~1\Temp\RSP2D.tmp"
+<h3>Output Window</h3>
+Compiling...
+allcodecs.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+cabac.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+common.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+dsputil.c
+E:\ti_projects\ffmpeg_h264_vc\dsputil.c(947) : warning C4018: '<' : signed/unsigned mismatch
+E:\ti_projects\ffmpeg_h264_vc\dsputil.c(948) : warning C4018: '<' : signed/unsigned mismatch
+E:\ti_projects\ffmpeg_h264_vc\dsputil.c(962) : warning C4018: '<' : signed/unsigned mismatch
+E:\ti_projects\ffmpeg_h264_vc\dsputil.c(2581) : warning C4244: '+=' : conversion from 'long ' to 'short ', possible loss of data
+error_resilience.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+e:\ti_projects\ffmpeg_h264_vc\error_resilience.c(177) : warning C4244: '=' : conversion from '__int64 ' to 'short ', possible loss of data
+golomb.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+h264.c
+e:\ti_projects\ffmpeg_h264_vc\golomb.h(143) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+e:\ti_projects\ffmpeg_h264_vc\golomb.h(170) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+E:\ti_projects\ffmpeg_h264_vc\h264.c(741) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(774) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(783) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(837) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(849) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(860) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(881) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(892) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(905) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(1092) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(3006) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(3043) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(3101) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(3302) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(3344) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(3366) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(3389) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(4117) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(4169) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(4192) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(4216) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(4698) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(4732) : warning C4002: too many actual parameters for macro 'tprintf'
+E:\ti_projects\ffmpeg_h264_vc\h264.c(5324) : warning C4101: 'nWrite' : unreferenced local variable
+imgconvert.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+jrevdct.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+mem.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+mpegvideo.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2285) : warning C4018: '>' : signed/unsigned mismatch
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2285) : warning C4018: '>' : signed/unsigned mismatch
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2364) : warning C4018: '>' : signed/unsigned mismatch
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2364) : warning C4018: '>' : signed/unsigned mismatch
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2520) : warning C4018: '>' : signed/unsigned mismatch
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2520) : warning C4018: '>' : signed/unsigned mismatch
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2597) : warning C4018: '>' : signed/unsigned mismatch
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2597) : warning C4018: '>' : signed/unsigned mismatch
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2739) : warning C4018: '>' : signed/unsigned mismatch
+e:\ti_projects\ffmpeg_h264_vc\mpegvideo.c(2739) : warning C4018: '>' : signed/unsigned mismatch
+parser.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+simple_idct.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+utils.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+e:\ti_projects\ffmpeg_h264_vc\utils.c(336) : warning C4305: '=' : truncation from 'const double ' to 'float '
+e:\ti_projects\ffmpeg_h264_vc\utils.c(744) : warning C4244: '=' : conversion from '__int64 ' to 'int ', possible loss of data
+e:\ti_projects\ffmpeg_h264_vc\utils.c(745) : warning C4244: '=' : conversion from '__int64 ' to 'int ', possible loss of data
+e:\ti_projects\ffmpeg_h264_vc\utils.c(756) : warning C4244: '=' : conversion from '__int64 ' to 'int ', possible loss of data
+e:\ti_projects\ffmpeg_h264_vc\utils.c(757) : warning C4244: '=' : conversion from '__int64 ' to 'int ', possible loss of data
+vp3dsp.c
+e:\ti_projects\ffmpeg_h264_vc\common.h(816) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+Linking...
+Creating temporary file "C:\DOCUME~1\luhanyu\LOCALS~1\Temp\RSP2F.tmp" with contents
+[
+/nologo /o"Debug/H264Dec.bsc" 
+.\Debug\allcodecs.sbr
+.\Debug\cabac.sbr
+.\Debug\common.sbr
+.\Debug\dsputil.sbr
+.\Debug\error_resilience.sbr
+.\Debug\golomb.sbr
+.\Debug\h264.sbr
+.\Debug\imgconvert.sbr
+.\Debug\jrevdct.sbr
+.\Debug\mem.sbr
+.\Debug\mpegvideo.sbr
+.\Debug\parser.sbr
+.\Debug\simple_idct.sbr
+.\Debug\utils.sbr
+.\Debug\vp3dsp.sbr]
+Creating command line "bscmake.exe @C:\DOCUME~1\luhanyu\LOCALS~1\Temp\RSP2F.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+H264Dec.exe - 0 error(s), 59 warning(s)
+</pre>
+</body>
+</html>

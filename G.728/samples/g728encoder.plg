@@ -1,0 +1,27 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: g728encoder - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA6.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/g728encoder.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\Administrator\×ÀÃæ\04\G728\samples\g728encoder.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA6.tmp" 
+<h3>Output Window</h3>
+Compiling...
+g728encoder.c
+c:\documents and settings\administrator\×ÀÃæ\04\g728\samples\g728encoder.c(31) : fatal error C1083: Cannot open include file: 'ippcore.h': No such file or directory
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+g728encoder.obj - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,133 @@
+Project    : "The GNU oSIP library" is an implementation of SIP - rfc3261. 
+Last update: 0.9.2
+Email      : jack@atosc.org
+License    : LGPL (http://www.gnu.org)
+Home Page  : http://www.fsf.org/software/osip/osip.html
+Download   : ftp://ftp.gnu.org/gnu/osip
+
+"The GNU oSIP library" is part of the "GNU project". You can check
+www.fsf.org for more information about being part of the "GNU project".
+
+This is "the GNU oSIP library" (for Omnibus SIP). It has been
+designed to provide the Internet Community a simple
+way to support the Session Initiation Protocol.
+SIP is described in the RFC3261 which is available at
+http://www.ietf.org/rfc/rfc3261.txt.
+
+
+FEATURES: (version 0.8.4)
+---------
+
+The oSIP library consists of 2 parts:
+
+PARSER:
+  *  SIP URL parser.
+  *  SIP message parser. (and accessor API)
+  *  SDP message parser. (and accessor API)
+  *  MIME support for message with multiple attachments. (not tested)
+
+TRANSACTION LAYER:
+  *  2 states machines for "client transaction" (INVITE and other).
+  *  2 states machines for "server transaction"
+  *  user controls the application with events.
+  *  events managed by the oSIP stack are announced through callbacks.
+  *  A SDP framework for quick negotiation. (for UAC/UAS only)
+  *  dialog handling facility. (for UAC/UAS only)
+  *  timers management framework.
+
+EXTRA:
+  *  Porting the library is done through the "port_" files.
+     keep in mind that you can replace the libraries where
+     you find the threads, mutex and semaphore facilities.
+     Please redistribute your ports to jack@atosc.org.
+  *  oSIP is not tight to any design! You can use the library
+     either in a multi-threaded environment or not, use your
+     own interruption's mechanism for timer, or use your own
+     transport protocol...
+
+Documentation:
+--------------
+
+Yet available:
+  *  this README file.
+  *  Documentation link at http://www.gnu.org/software/osip/
+
+Installation procedure:
+-----------------------
+
+The library is known to compile on various platform:
+  *  GNU/Linux
+	(2.2.16, 2.4.7, 2.4.12, 2.4.17 with gcc 2.95.2)
+	gcc-3.0.3 from libosip-0.7.8
+  *  OpenBsd 3.1/3.2  // FreeBSD  (NetBSD should also work)
+  *  Windows NT (95, 2000, ???)
+        VC++6.0
+  *  Solaris.
+
+Extra set of OS where some version of oSIP has been ported.
+  *  HP-Unix.
+  *  VxWorks.
+  *  Some embedded systems with linux.
+
+The INSTALL file describes the compilation process.
+
+Tests programs:
+---------------
+
+NOTE: "josua" is available on osip.atosc.org/download and is used
+      to test the oSIP stack. Also, you can download a Proxy server
+      "partysip" at www.partysip.org.
+
+For basic test, type the following command line:
+
+  $> make check
+
+For more testing: (!!!DON'T WORRY, SOME TESTS MUST FAIL!!!)
+
+  *  ./test/torture_test: test the SIP parser.
+  *  ./test/torture_sdp: test the SDP parser, its accessor API and the
+                         framework for negotiation.
+
+  *  ./test/turl      : test the sip-urls parser.
+  *  ./test/tto       : test some 'to' fields
+  *  ./test/tfrom     : test some 'from' fields
+  *  ./test/tcontact  : test some 'contact' fields
+  *  ./test/tvia      : test some 'via' fields
+  *  ./test/tcallid   : test some 'call-id' fields
+  *  ./test/tcontentt : test some 'content-type' fields
+
+How to use the test programs:
+
+  Some SIP and SDP samples are provided in conf/torture_msgs
+                                           conf/torture_msgs2
+                                           conf/torture_sdps
+
+	./test/torture_test conf/torture_msgs 0
+	./test/torture_test conf/torture_msgs 1 -v
+	./test/torture_test conf/torture_msgs 3 -v -c
+
+	./test/torture_sdp conf/torture_sdps 3
+	./test/torture_sdp conf/torture_sdps 3 -v
+
+	./test/tcallid conf/callids.txt
+	./test/tfrom  conf/froms.txt
+	./test/tto conf/tos.txt
+	./test/tvia conf/vias.txt
+	./test/tcontact conf/contacts.txt
+	./test/turl conf/urls.txt
+
+Contact information:
+--------------------
+
+For more information on the SIP stack, or any contributions,
+you can contact the author at <jack@atosc.org>.
+
+A Mailing list is available for support: <osip@atosc.org>.
+You can subscribe by writing to: <osip-request@atosc.org>
+with a subject set to "subscribe".
+
+Latest version is available at:
+ftp://ftp.gnu.org/gnu/osip
+
+Home page is located at:
+http://www.fsf.org/software/osip/osip.html

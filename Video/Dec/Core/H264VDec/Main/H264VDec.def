@@ -1,0 +1,4 @@
+LIBRARY	"H264VDec.DLL"
+
+EXPORTS
+    CreateComponent		PRIVATE

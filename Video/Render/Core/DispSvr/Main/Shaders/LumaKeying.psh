@@ -1,0 +1,48 @@
+//
+// we adopt the formulae from
+// http://www.fourcc.org/fccyvrgb.php
+//
+// Y = 0.299R + 0.587G + 0.114B
+// U'= (B-Y)*0.565
+// V'= (R-Y)*0.713
+
+
+sampler texture0 : register(s0);
+
+float4 luma : register(c0);
+
+#define lumaStart (luma[0])
+#define lumaEnd (luma[1])
+#define offset (luma[2])
+#define coef (luma[3])
+
+// general purpose luma keying shader
+float4 LumaKeyingPS(float2 texCoord : TEXCOORD0) : COLOR
+{
+	float4 c = tex2D(texture0, texCoord);
+	float y = offset + dot(c.rgb, coef * float3(0.299, 0.587, 0.114));
+
+	// kill the pixel if luma is not in the range.
+	clip((lumaStart - y) * (lumaEnd - y));
+	return c;
+}
+
+float4 LumaKeying_0_255_PS(float2 texCoord : TEXCOORD0) : COLOR
+{
+	float4 c = tex2D(texture0, texCoord);
+	float y = dot(c.rgb, 255 * float3(0.299, 0.587, 0.114));
+
+	// kill the pixel if luma is not in the range.
+	clip((lumaStart - y) * (lumaEnd - y));
+	return c;
+}
+
+float4 LumaKeying_16_235_PS(float2 texCoord : TEXCOORD0) : COLOR
+{
+	float4 c = tex2D(texture0, texCoord);
+	float y = 16 + dot(c.rgb, (235 - 16) * float3(0.299, 0.587, 0.114));
+
+	// kill the pixel if luma is not in the range.
+	clip((lumaStart - y) * (lumaEnd - y));
+	return c;
+}

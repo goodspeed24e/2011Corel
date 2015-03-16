@@ -1,0 +1,25 @@
+#// Include the Macro defines from makedef
+!INCLUDE $(SSROOTDIR)\Shared\Install\makeDef
+
+
+#//////////////////////////////////////////////////////////////////////////////////////
+# BuildMultiPlayer
+#   + compile and build MultiPlayer project
+BuildMultiPlayer:
+	@echo [MultiPlayer]:
+	@echo Compiler flags: %%CL%%
+	cd $(SSROOTDIR)\Shared\Components\DispSvr\MultiPlayer
+	$(BUILD) MultiPlayer.dsw /MAKE "MultiPlayer - Win32 $(BUILDCONFIG)" $(REBUILD) $(USEDXENV)
+	cd $(BUILDDIR)
+#
+!IF	EXIST("$(BUILDDIR)")
+	-mkdir $(BUILDDIR)\DepotTemp\$(BUILDCONFIG)
+	-copy $(SSROOTDIR)\Shared\Components\DispSvr\MultiPlayer\$(BUILDCONFIG)\MultiPlayer.map $(BUILDDIR)\DepotTemp\$(BUILDCONFIG)
+	copy $(SSROOTDIR)\Shared\Components\DispSvr\MultiPlayer\$(BUILDCONFIG)\MultiPlayer.exe $(BUILDDIR)\DepotTemp\$(BUILDCONFIG)
+#
+	-copy $(SSROOTDIR)\Shared\Components\Bin\$(BUILDCONFIG)\DispSvr.map $(BUILDDIR)\DepotTemp\$(BUILDCONFIG)
+	copy $(SSROOTDIR)\Shared\Components\Bin\$(BUILDCONFIG)\DispSvr.dll $(BUILDDIR)\DepotTemp\$(BUILDCONFIG)
+#
+	cd $(BUILDDIR)
+!ENDIF
+#//////////////////////////////////////////////////////////////////////////////////////

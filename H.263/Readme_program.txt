@@ -1,0 +1,1 @@
+   這是丁貴廣編的《Visual C++6.0數位圖像編碼》中h.263的編解碼程式。不過編碼時只能編碼I幀和P幀。解碼時在Debug環境下會報錯，在Release環境下能通過解碼，但是以最快速度播放的。希望大家多多交流，對程式進行一下修改！

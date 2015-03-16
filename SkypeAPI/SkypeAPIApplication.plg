@@ -1,0 +1,30 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: SkypeAPIApplication - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/SkypeAPIApplication.res" /d "_DEBUG" /d "_AFXDLL" "C:\sysbak\20080806-VisualC-reader-fromdavid\visual c++\ตฺ16ีย\SkypeAPI\SkypeAPIApplication.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP46.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/SkypeAPIApplication.pdb" /debug /machine:I386 /out:"Debug/SkypeAPIApplication.exe" /pdbtype:sept 
+".\Debug\SkypeAPI.obj"
+".\Debug\SkypeAPIApplication.obj"
+".\Debug\SkypeAPIApplicationDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\SkypeAPIApplication.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP46.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Linking...
+
+
+
+<h3>Results</h3>
+SkypeAPIApplication.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

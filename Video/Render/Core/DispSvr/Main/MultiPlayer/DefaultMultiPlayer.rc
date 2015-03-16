@@ -1,0 +1,277 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\DefaultMultiPlayer.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\DefaultMultiPlayer.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About DefaultMultiPlayer"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "Display Server Tester 0.6",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) Corel",IDC_STATIC,40,25,188,8
+    DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
+END
+
+IDD_DEFAULTMULTIPLAYER_DIALOG DIALOGEX 0, 0, 386, 329
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "MultiPlayer: Playback of several sources using DispSvr.dll"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_COMBO_SOURCES,43,20,335,66,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Source:",IDC_STATIC,7,23,37,8
+    CTEXT           "Total sources:",IDC_STATIC_TOTAL,7,7,371,11,SS_CENTERIMAGE
+    RTEXT           "<File path>",IDC_STATIC_PATH,7,39,371,12,SS_CENTERIMAGE,WS_EX_STATICEDGE
+    CONTROL         "",IDC_SLIDER_TIME,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,7,95,371,11
+    PUSHBUTTON      "Play",IDC_BUTTON_PLAY,79,119,23,23,BS_BITMAP
+    PUSHBUTTON      "Pause",IDC_BUTTON_PAUSE,109,119,23,23,BS_BITMAP
+    PUSHBUTTON      "Eject",IDC_BUTTON_ATTACH,19,119,23,23,BS_BITMAP
+    CONTROL         "",IDC_SLIDER_ALPHA,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,7,153,70,11
+    LTEXT           "Alpha-level = ",IDC_STATIC_ALPHA,83,153,88,11,SS_CENTERIMAGE
+    CONTROL         "",IDC_SLIDER_YPOS,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,7,195,70,11
+    CONTROL         "",IDC_SLIDER_XSIZE,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,216,155,70,11
+    CONTROL         "",IDC_SLIDER_XPOS,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,7,174,70,11
+    CONTROL         "",IDC_SLIDER_YSIZE,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,216,176,70,11
+    LTEXT           "X-position = ",IDC_STATIC_XPOS,83,174,88,11,SS_CENTERIMAGE
+    LTEXT           "Y-position = ",IDC_STATIC_YPOS,83,195,84,11
+    LTEXT           "X-size = ",IDC_STATIC_XSIZE,297,155,78,11,SS_CENTERIMAGE
+    LTEXT           "Y-size = ",IDC_STATIC_YSIZE,297,176,77,11
+    CONTROL         "",IDC_SLIDER_ZORDER,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,216,197,70,11
+    LTEXT           "Z-order = ",IDC_STATIC_ZORDER,296,197,76,11,SS_CENTERIMAGE
+    CONTROL         "",IDC_SLIDER_SETFPS,"msctls_trackbar32",WS_TABSTOP,7,70,371,11
+    CTEXT           "Desired FPS = , Actual FPS =",IDC_STATIC_SETFPS,7,59,371,8
+    PUSHBUTTON      "Eject",IDC_BUTTON_DETACH,48,119,23,23,BS_BITMAP
+    CTEXT           "t = 00:00:00",IDC_STATIC_CURTIME,75,84,66,8
+    LTEXT           "00:00:00",IDC_STATIC_START,7,84,30,8
+    RTEXT           "00:00:00",IDC_STATIC_STOP,348,84,30,8
+    PUSHBUTTON      "Pause",IDC_BUTTON_FIT,141,119,23,23,BS_BITMAP
+    PUSHBUTTON      "Close",IDOK,303,305,51,17
+    PUSHBUTTON      "Pause",IDC_BUTTON_COLOR,165,119,23,23,BS_BITMAP
+    CONTROL         "EVR",IDC_CHECK_EVR,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,300,253,29,10
+    CONTROL         "VMR9",IDC_CHECK_VMR9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,300,266,34,10
+    CONTROL         "IVI DS Demux",IDC_CHECK_IVIDSDEMUX,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,229,226,60,10
+    CONTROL         "MS Demux",IDC_CHECK_MSDEMUX,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,229,239,49,10
+    CONTROL         "CL Demux",IDC_CHECK_CLDEMUX,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,229,252,48,10
+    CONTROL         "IVI Video",IDC_CHECK_IVIVIDEO,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,229,267,45,10
+    CONTROL         "CL Video",IDC_CHECK_CLVIDEO,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,229,294,43,10
+    CONTROL         "IVI Audio",IDC_CHECK_IVIAUDIO,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,300,226,45,10
+    CONTROL         "CL Audio",IDC_CHECK_CLAUDIO,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,300,240,44,10
+    CONTROL         "IVI Video DXVA",IDC_CHECK_IVIVIDEODXVA,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,229,280,63,10
+    GROUPBOX        "Demux",IDC_GROUP_DEMUX,7,216,212,30
+    GROUPBOX        "Video",IDC_GROUP_VIDEO,7,247,212,41
+    GROUPBOX        "Audio",IDC_GROUP_AUDIO,7,289,212,30
+    CONTROL         "IVI Demux",IDC_RADIO_IVI_DEMUX,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,20,230,49,10
+    CONTROL         "CL Demux",IDC_RADIO_CL_DEMUX,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,74,230,48,10
+    CONTROL         "MS Demux",IDC_RADIO_MS_DEMUX,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,131,230,49,10
+    CONTROL         "IVI Video",IDC_RADIO_IVI_VIDEO,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,20,260,45,10
+    CONTROL         "CL Video",IDC_RADIO_CL_VIDEO,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,74,260,43,10
+    CONTROL         "IVI Audio",IDC_RADIO_IVI_AUDIO,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,20,301,45,10
+    CONTROL         "CL Audio",IDC_RADIO_CL_AUDIO,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,74,301,44,10
+    CONTROL         "IVI DXVA",IDC_RADIO_DXVA,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_DISABLED | WS_TABSTOP,131,260,45,10
+    CONTROL         "EVR",IDC_RADIO_EVR,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,181,261,29,10
+    CONTROL         "IVI 60fps",IDC_RADIO_IVI_60FPS,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | BS_FLAT | WS_DISABLED | WS_TABSTOP,19,273,45,10
+    CONTROL         "VideoSourceDO",IDC_RADIO_VIDEOSOURCEDO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,273,65,10
+    CONTROL         "VideoSourceDO",IDC_CHECK_VIDEOSOURCEDO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,300,280,65,10
+    CONTROL         "DShow Sync.",IDC_RADIO_DSHOWSYNC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,149,273,58,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,6,0,0
+ PRODUCTVERSION 0,6,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "DirectShow Sample"
+            VALUE "CompanyName", "Microsoft"
+            VALUE "FileDescription", "VMR9 DefaultMultiPlayer Application"
+            VALUE "FileVersion", "9.00"
+            VALUE "InternalName", "MultiPlayer9"
+            VALUE "LegalCopyright", "Copyright (c) Microsoft Corporation"
+            VALUE "OriginalFilename", "DefaultMultiPlayer.EXE"
+            VALUE "ProductName", "DirectX 9 SDK"
+            VALUE "ProductVersion", "9.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_DEFAULTMULTIPLAYER_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 378
+        VERTGUIDE, 131
+        VERTGUIDE, 219
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 322
+        HORZGUIDE, 216
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_PLAY_DISABLE BITMAP                  "Bitmaps\\BtnPlayGray.bmp"
+IDB_BITMAP_PLAY         BITMAP                  "Bitmaps\\BtnPlay.bmp"
+IDB_BITMAP_PAUSE_DISABLE BITMAP                  "Bitmaps\\BtnPauseGray.bmp"
+IDB_BITMAP_PAUSE        BITMAP                  "Bitmaps\\BtnPause.bmp"
+IDB_BITMAP_DETACH_DISABLE BITMAP                  "Bitmaps\\BtnMinusGray.bmp"
+IDB_BITMAP_DETACH       BITMAP                  "Bitmaps\\BtnMinus.bmp"
+IDB_BITMAP_ATTACH_DISABLE BITMAP                  "Bitmaps\\BtnPlusGray.bmp"
+IDB_BITMAP_ATTACH       BITMAP                  "Bitmaps\\BtnPlus.bmp"
+IDB_BITMAP_SCALE        BITMAP                  "Bitmaps\\BtnScale.bmp"
+IDB_BITMAP_SCALE_DISABLE BITMAP                  "Bitmaps\\BtnScaleGray.bmp"
+IDB_BITMAP_COLOR        BITMAP                  "Bitmaps\\BtnColor.bmp"
+IDB_BITMAP_COLOR_DISABLE BITMAP                  "Bitmaps\\BtnColorGray.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About DefaultMultiPlayer..."
+    IDS_TT_ADD              "Attach new movie to the wizard"
+    IDS_TT_DETACH           "Detach selected movie from the wizard"
+    IDS_TT_PLAY             "Play selected movie"
+    IDS_TT_PAUSE            "Pause selected movie"
+    IDS_TT_FIT              "Fit selected movie to the video window"
+    IDS_TT_BKCOLOR          "Change background color"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\DefaultMultiPlayer.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,103 @@
+#ifndef _AUDIO_TYPE_DEF_H_
+#define _AUDIO_TYPE_DEF_H_
+
+#include <windows.h>
+
+// Microsoft SDKs\Windows\v6.1\Include
+// File: uuids.h
+// Desc: Contains the GUIDs for the MediaType type, subtype fields and format types
+//       for standard media types, and also class ids for well-known components.
+//#include <uuids.h>
+
+#include <crtdbg.h>
+
+#define  WAVE_FORMAT_IEEE_FLOAT 0x0003  /*  Microsoft Corporation  */
+
+#ifndef OUR_GUID_ENTRY
+#define OUR_GUID_ENTRY(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) \
+DEFINE_GUID(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8);
+#endif
+
+#ifndef __STREAMS__
+// derived from WAVE_FORMAT_IEEE_FLOAT
+// 00000003-0000-0010-8000-00aa00389b71
+OUR_GUID_ENTRY(MEDIASUBTYPE_IEEE_FLOAT,
+0x00000003, 0x0000, 0x0010, 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71)
+
+// 0F6417D6-C318-11D0-A43F-00A0C9223196	       FORMAT_None
+OUR_GUID_ENTRY(FORMAT_None,
+0x0F6417D6, 0xc318, 0x11d0, 0xa4, 0x3f, 0x00, 0xa0, 0xc9, 0x22, 0x31, 0x96)
+
+//OUR_GUID_ENTRY(GUID_NULL,
+//0x00000000, 0x0000, 0x0000, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
+
+// 73647561-0000-0010-8000-00AA00389B71  'auds' == MEDIATYPE_Audio
+OUR_GUID_ENTRY(MEDIATYPE_Audio,
+0x73647561, 0x0000, 0x0010, 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71)
+
+// 05589f81-c356-11ce-bf01-00aa0055595a    FORMAT_WaveFormatEx
+OUR_GUID_ENTRY(FORMAT_WaveFormatEx,
+0x05589f81, 0xc356, 0x11ce, 0xbf, 0x01, 0x00, 0xaa, 0x00, 0x55, 0x59, 0x5a)
+
+
+// MEDIASUBTYPE
+
+// 00000001-0000-0010-8000-00AA00389B71    MEDIASUBTYPE_PCM
+OUR_GUID_ENTRY(MEDIASUBTYPE_PCM,
+0x00000001, 0x0000, 0x0010, 0x80, 0x00, 0x00, 0xAA, 0x00, 0x38, 0x9B, 0x71)
+
+// e06d802b-db46-11cf-b4d1-00805f6cbbea    MEDIASUBTYPE_MPEG2_AUDIO
+OUR_GUID_ENTRY(MEDIASUBTYPE_MPEG2_AUDIO,
+0xe06d802b, 0xdb46, 0x11cf, 0xb4, 0xd1, 0x00, 0x80, 0x05f, 0x6c, 0xbb, 0xea)
+
+// e06d802c-db46-11cf-b4d1-00805f6cbbea    MEDIASUBTYPE_DOLBY_AC3
+OUR_GUID_ENTRY(MEDIASUBTYPE_DOLBY_AC3,
+0xe06d802c, 0xdb46, 0x11cf, 0xb4, 0xd1, 0x00, 0x80, 0x05f, 0x6c, 0xbb, 0xea)
+
+// e06d8033-db46-11cf-b4d1-00805f6cbbea    MEDIASUBTYPE_DTS
+OUR_GUID_ENTRY(MEDIASUBTYPE_DTS,
+0xe06d8033, 0xdb46, 0x11cf, 0xb4, 0xd1, 0x00, 0x80, 0x05f, 0x6c, 0xbb, 0xea)
+
+// A2CB56F1-CB59-4ae5-9A06-D2C9C40BEB25    MEDIASUBTYPE_DTSHD
+OUR_GUID_ENTRY(MEDIASUBTYPE_DTSHD,
+0x3f1f6752, 0x7db3, 0x44b7, 0x99, 0x51, 0x8, 0x62, 0x11, 0xca, 0xbf, 0xc6)
+
+// 999ec19c-eaea-4c1d-8153-ad3f5a26c908    MEDIASUBTYPE_DTSLBR
+OUR_GUID_ENTRY(MEDIASUBTYPE_DTSLBR,
+0x999ec19c, 0xeaea, 0x4c1d, 0x81, 0x53, 0xad, 0x3f, 0x5a, 0x26, 0xc9, 0x08)
+
+// e06d8032-db46-11cf-b4d1-00805f6cbbea    MEDIASUBTYPE_DVD_LPCM_AUDIO
+OUR_GUID_ENTRY(MEDIASUBTYPE_DVD_LPCM_AUDIO,
+0xe06d8032, 0xdb46, 0x11cf, 0xb4, 0xd1, 0x00, 0x80, 0x05f, 0x6c, 0xbb, 0xea)
+
+
+// derived from WAVE_FORMAT_DOLBY_AC3_SPDIF
+// 00000092-0000-0010-8000-00aa00389b71
+OUR_GUID_ENTRY(MEDIASUBTYPE_DOLBY_AC3_SPDIF,
+0x00000092, 0x0000, 0x0010, 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71)
+
+// derived from WAVE_FORMAT_RAW_SPORT
+// 00000240-0000-0010-8000-00aa00389b71
+OUR_GUID_ENTRY(MEDIASUBTYPE_RAW_SPORT,
+0x00000240, 0x0000, 0x0010, 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71)
+
+// derived from wave format tag 0x241, call it SPDIF_TAG_241h for now
+// 00000241-0000-0010-8000-00aa00389b71
+OUR_GUID_ENTRY(MEDIASUBTYPE_SPDIF_TAG_241h,
+0x00000241, 0x0000, 0x0010, 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71)
+
+#endif // __STREAMS__
+
+
+
+//Located at windows environment "VFWMSGS.h"
+#if !defined(E_PROP_SET_UNSUPPORTED)
+#define E_PROP_SET_UNSUPPORTED           ((HRESULT)0x80070492L)
+#endif //!defined(E_PROP_SET_UNSUPPORTED)
+
+#if !defined(E_PROP_ID_UNSUPPORTED)
+#define E_PROP_ID_UNSUPPORTED            ((HRESULT)0x80070490L)
+#endif //!defined(E_PROP_ID_UNSUPPORTED)
+
+#endif
+

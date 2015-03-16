@@ -1,0 +1,273 @@
+HVDService.dll Release Note
+
+************************************************************
+
+Ver. 3.0.0.16
+2011/04/29
+1. Add handle code to prevent Null point access. 
+
+Ver. 3.0.0.15
+2011/03/31
+1. Flag of InputProgressive is not well setting into HVDService, fix in HWVDec.
+2. If flag of InputProgressive arises, flag of OutputProgressive is followed as true.
+
+Ver. 3.0.0.14
+2011/03/31
+1. Add one workaround and later to fix. We do lock the first 8 number frames. And this is against to  multitrack green picture issue.
+
+Ver. 3.0.0.13
+2011/03/29
+1. Revise CL#667603. LockSurfaceFirst to be one memento member in CHVDServiceDxva2.
+2. Change the LockSurcface as static property once Readback open.
+
+Ver. 3.0.0.12
+2011/03/24
+CL#667597
+1. Add on esurface lock check mechanism for multi-track project mode playback requirement.
+
+CL#667125
+1. On SNB readback case, source display width/height should be sent to HVDService for IntelFastCopy to get correct source rect. 
+   It fixs green line issue. 
+
+Ver. 3.0.0.11
+2011/03/15
+1. Fix green line issue on AMD platform 
+
+Ver. 3.0.0.10
+2011/03/14
+1. Revise ExpectedWidth/ExpectedHeight usage.
+
+Ver. 3.0.0.9
+2011/03/11
+1. Support cropping and it is based on 16 alignment. 
+2. The dest RECT to vendor's readback API shall be exactly the output width/height instead of aligned width/aligned height
+   Off-Screen render surface size could be set as aligned stride * height
+   Verified work on Intel FastComp
+3. Revise 1. and 2.
+4. FastReadBack will do 1088 lines in 1920x1080<->1440x1080 cases on AMD platform, fix it
+
+Ver. 3.0.0.8
+2011/01/14
+1. Fix heterogeneous resize effect in FastCopy and software work.
+
+Ver. 3.0.0.7
+2010/12/01
+1. Integrate CL#638040 from main branch; We have to use display resolution as source buffer when doing blt in IntelFastCom. And this is for H264 case.
+
+
+Ver. 3.0.0.6
+2010/11/01
+1.If MCOM open failed and switch to D3D read back, the resizing will disable and transfer to VXCoder to do. 
+
+Ver. 3.0.0.5
+2010/10/20
+[bug113693/113719]
+1. We have to use display resolution as source buffer when doing blt in IntelFastCom. 
+
+Ver. 3.0.0.4
+Release Date 2010/09/23
+CL#632916
+1. Roll back CL#632689. Because the Null pointer will be regarded as reset pointer at the case:"HWVdoGMOParam::VDO_PARAM_SET_MSDK_MEM_ALLOCATOR".
+2. Add error handle and Null handle recover in HVDService for InstallMediaAllocator.
+
+CL#633321
+1. [Bug111954]To copy and add one DXVA guid selector group for MVC purpose. 
+
+Ver. 3.0.0.3
+Release Date 2010/09/16
+1. integrate CL#629496. HVDService 3.1.X to Main.
+                        HWVDec     2.1.X to Main.
+2. Sync HVDInitFastCopyConfig struct.
+
+Ver. 3.0.0.2
+Release Date 2010/08/26
+1. Removing the constrains of using FRB in Intel platform.
+2. Change the name of inputwidth/inputheight to specify with INI file.
+3. Correct the pitch report of D3D surface in intel platform
+4. Because the surface layout is changed in SNB case, correct the right input width and height for HVDService.
+
+Ver. 3.0.0.1
+Release Date 2010/08/09
+1. Sync code base from HVDService[2.0.1.X FastCopy], CL#617391. Ver:[2.0.1.7]
+
+Ver. 2.0.0.20
+Release Date 2010/03/03
+1. Add a level constraint in HVDService. the uncompress-buffer number will be set as customer configuration.
+
+Ver. 2.0.0.19
+Release Date 2010/03/02
+1. integrate 3DBD relative code into Main branch
+
+Ver. 2.0.0.18
+Release Date 2010/02/05
+1. Modify DXVA1 setdeinterlacemode
+
+Ver. 2.0.0.17
+Release Date 2010/01/14
+1. When small size(<= 720*480), we create max 16 surface and remain 5 surface to deinterlace, display queue and decode.
+
+Ver. 2.0.0.16
+Release Date 2010/01/05
+1. Fix a timing issue that may use dxva service while it is already be released and caused AP crash.
+
+Ver. 2.0.0.15
+Release Date 2010/01/04
+1. Remove error code in CL#589404.
+
+Ver. 2.0.0.14
+Release Date 2010/01/04
+1. Add one SetParamete and GetParameter for future work.
+2. Add interlace flag setting from HWVDec's open option. 
+  MCom will switch on/off scaling by interlace conten and his interlace caps support or not.
+
+Ver. 2.0.0.13
+Release Date 2009/12/10
+1. Fix bug that dxva config setting for mpeg1 MC on XP OS
+
+Ver. 2.0.0.12
+Release Date 2009/12/09
+1. Fix bug that dxva decoder shall not finalize at fastreadback module.
+ 
+Ver. 2.0.0.11
+Release Date 2009/12/08
+1. FastComp: Set TargetInSysMem=FALSE for SandyBridge
+2. Fix memory leakeage. 
+3. Change the CoInitialize to be CoInitializeEx(NULL, COINIT_MULTITHREADED)
+4. Intel Fast copy: Examine teh system if fast copy is supported [2] Resolve memory leak issue
+5. Intel Fast copy: Resolve memory leak issue
+6. Disable resizing on AMD pCOM when decoder is HWDec.
+
+Ver. 2.0.0.10
+Release Date 2009/10/27
+1. Modify dxva config setting for mpeg2 MC mode on XP OS.
+
+Ver. 2.0.0.9
+Release Date 2009/10/23
+1. Update Intel fastcopy code according spec revision 1.4
+2. Add Debug print function in thirdparty file
+3. Add Intel fast copy, AMD MCOM, and nVidia fast copy
+4. Enable DXVA decoding and pass D3d Surface diretcly to MSDK.
+
+Ver. 2.0.0.8
+Release Date 2009/08/25
+1.Modify IsScramblingRequired() of ivicp to query information only
+
+ver. 2.0.0.7
+Release Date 2009/08/17
+1.Update the latest code of HWDec
+2.Change HVDTester to sync with VC-1 IDCT mode multi-threading re-arch
+3.Update Intel fastcopy code according spec revision 0.75
+
+Ver. 2.0.0.6
+Release Date 2009/07/22
+1.add HVD_DECODE_ENCRYPTION_GPUCP to create surface with D3DUSAGE_RESTRICTED_CONTENT
+for prevent read function of GPUCP in Win7
+
+Ver. 2.0.0.5
+Release Date 2009/07/16
+1.VxCoder: enable DXVA fast readback
+2.Support AMD MCOM fast readback.
+3.Update HVDTest to sync with main tree VC-1 decoder interface
+4.Remove unnecessary code(GetRecommendedTextureSize) in 
+  CHVDServiceDxva1::DSUpdateOutputSample() to avoid error occurred when reinitialize device surface.
+
+Ver. 2.0.0.4
+Release Date 2009/06/19
+1.Fixed the crash issue in MPEG-2 DXVA mode, it's a side effect by CL#547049
+2.Update media format info to HVDService¡¦s configuration and pass to decoder to fix reboot issue.
+
+Ver. 2.0.0.3
+Release Date 2009/06/12
+1.Implement fast data copy from video to system memory
+2.Fixed the corruption issue in MPEG-1 DXVA mode, now HVDService will force to disable DXVA mode on MPEG-1 content
+
+Ver. 2.0.0.2
+Release Date 2009/05/05
+1.According to Rock's suggestion, calling DisableThreadLibraryCalls in Loading Library to improve performance.
+
+Ver. 2.0.0.1
+Release Date 2009/04/15
+1.Add Intel 2nd Context GUID for H264/VC1.
+  Enable 2nd Context GUID to alleviate CPU-bound issue.
+
+Ver. 1.0.0.15
+Release Date 2009/04/03
+1. Integrate the new IVICP SDK.
+
+Ver. 1.0.0.14
+Release Date 2009/03/23
+1. Don¡¦t force output a frame when refresh was happened
+     
+Ver. 1.0.0.13
+     CL#510406 Add S3 XP DXVA1 support
+     CL#516453 Add status to check data decoded completed or not. (MP2, VC1)
+     CL#524773 Enable DXVA1 fail on AMD ASIC with new dirver because we pass wrong variable to driver.
+
+Ver. 1.0.0.12			 
+     CL#457079 1. Add "DisableDXVA" to three INI file to allow SW decoding.
+	                    2. Copy EXE and all INI files into Exports/Bin/.
+     CL#507719 1.Add NV24, NV12, IMC3, YV12 write frame methods.
+			                2.Remove "writeFrame" method in CMP2DXVATestProgram class and "WriteOutFrame" method in CVC1DXVATestProgram class.
+			                3.Add "INPUTDIR" and "OUTPUTDIR" to three INI file.
+			                4.Add "IsEnableDXVA" flag to determine enable DXVA or not and make write frame correctly.
+			                5.Set "bLastSlice" variable to default value after launth test.
+     CL#509085 Add "DXVASELECT" and remove "DISABLEDXVA" from three INI file.
+     CL#509085 Add DXVA1 test
+     CL#5510406 If it's failed to create video decoder for dxva2 we set m_DecoderGuid = GUID_NULL so we can know this failure then switch to software mode
+	
+Ver. 1.0.0.11
+     CL#444190 Fix memory leakage issue.
+     CL#451680 Update ISMPGMO lib version to 1.0.0.19.
+     CL#451902 (1)Fix green screen issue on VCD.
+			         (2)Remove duplicated StartService().
+			 
+Ver. 1.0.0.10
+Release Date 2008/11/13
+1. Upload HVDService UI test program.
+2. HVDTester: Add H.264 and MPEG2 test functions for DXVA2.
+3. HVDTester: Add VC1 test functions for DXVA2.
+4. HVDTester: Add some logs on HVDTester. Add a new key "DISABLEDXVA" to run on Pure Software. Support ISMP.
+5. MPEG2 VLD mode uses the spic buffer. Such as DXVA_ModeMPEG2_B and DXVA_ModeMPEG2_D, we can connect spic pin by this.
+6. Release right memory to aviod crash or memory leak issue.
+7. Add ATI defined GUID for M56.
+
+Ver. 1.0.0.9
+Release Date 2008/08/06
+1. Fix HVDService crash during DXVA2 initializing.
+
+Ver. 1.0.0.8
+Release Date 2008/07/30
+1. Fix HVDService memory leakage
+
+Ver. 1.0.0.7
+Release Date 2008/07/25
+1. Add m_dwWidth and m_dwHeight to store from m_HVDDecodeConfig.
+2. Fix HVDService memory leakage
+
+Ver. 1.0.0.6
+Release Date 2008/07/18
+1. Add a HVD_EVENT for querying the uncompressed buffer decodec want to use is availability or not.
+
+Ver. 1.0.0.5
+Release Date 2008/07/14
+1. Fix HVDService may hang up if DXVA1 cannot be opened.
+2. Add new interface for Getting the HVDDecodeConfig.
+
+Ver. 1.0.0.4
+Release Date 2008/07/02
+1. Fix DXVA1 GetUncompressedBufferCount API incorrect issue.
+2. Fix DXVA1 GetUncompresesdBufferFormat API incorrect issue.
+
+Ver. 1.0.0.3
+Release Date 2008/07/01
+1. Implement DXVA1 DShow mode
+2. Update HVDService.h
+
+Ver. 1.0.0.2
+Release Date 2008/06/16
+1. Implement HVDService Notify mechanism,release external surface with stop event.
+2. Update HVDService.h
+
+Ver. 1.0.0.1
+Release Date 2008/06/10
+NA

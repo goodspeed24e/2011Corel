@@ -1,0 +1,25 @@
+This UA is based on draft-ietf-sip-rfc2543bis-08.txt
+
+This is a summary that tries to match files and section from the draft!
+
+msg_req.c:
+  Section: 8.1.1 Generating the Request  (from UAC behavior)
+  Section: 9.1   Client behavior  (from Cancelling a request)
+     You can cancel any type of transaction within a dialog or not!
+     In all cases, CANCEL can be built with the request!
+  Section: 10.2 constructing the REGISTER request  (Registrations)
+  Section: 15.1.1 UAC behavior (Terminating session)
+  Section: 12.2.1.1
+  Section: 13.2.1 Creating the initial INVITE
+  Section: 14.1 UAC behavior (modifying an existing session)
+
+example_callbackuac.c:
+  Section: 13.2.2 Processing INVITE response
+              1xx, 3xx, 4-5-6xx, 2xx
+
+msg_resp.c:
+  Section: 8.1.3 Processing response (from UAC behavior)
+     general behavior for all incoming response
+
+udp_tl.c: not yet done!
+  Section: 8.1.2 Sending the Request (from UAC behavior)

@@ -1,0 +1,9 @@
+; _@@TR_REGION_ISMPGMO_12
+
+?Output_Open@ISMPGMOBridge@@AAGHPBEKPAE@Z
+?ScrambleGMediaBuffer@ISMPGMOBridge@@QAGHPAVIGMediaBuffer@@III@Z
+?Input_Open@ISMPGMOBridge@@AAGHPAEK@Z
+?Output_VerifyResponse@ISMPGMOBridge@@AAGHPAE@Z
+?DescrambleGMediaBuffer@ISMPGMOBridge@@QAGHPAVIGMediaBuffer@@PAI11@Z
+?SPConnect@ISMPGMOBridge@@QAGJPAXK@Z
+

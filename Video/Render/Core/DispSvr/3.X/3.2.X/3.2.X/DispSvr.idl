@@ -1,0 +1,1784 @@
+// DispSvr.idl : IDL source for helper library DispSvr
+
+import "unknwn.idl";
+
+cpp_quote("#if 0")
+// This is temporary workaround to persuade
+// MIDL to allow forward declarations.
+typedef LPVOID* IBaseFilter;
+typedef LPVOID* IFilterGraph;
+cpp_quote("#endif")
+
+cpp_quote("#include <d3d9.h>")
+cpp_quote("#include <dshow.h>")
+cpp_quote("#include <ddraw.h>")
+
+cpp_quote("#ifndef VIDEO_SOURCE_TAG")
+cpp_quote("#define VIDEO_SOURCE_TAG 0x12345")
+cpp_quote("#endif")
+
+cpp_quote("#if 0")
+//
+// Normalized relative rectangle
+// Coordinate ranges: x=[0...1) y=[0...1)
+// Where the output window goes from 0,0 (closed inclusive lower bound)
+// to 1,1 (open exclusive upper bound)
+//
+typedef struct _NORMALIZEDRECT
+{
+    float left;
+    float top;
+    float right;
+    float bottom;
+}
+NORMALIZEDRECT, *PNORMALIZEDRECT;
+cpp_quote("#endif")
+
+// public interfaces supported by DispSvr
+interface IDisplayServer;
+interface IDisplayRenderEngine;
+interface IDisplayObject;
+interface IDisplayVideoMixer;
+interface IDisplayVideoSource;
+interface IDispSvrRenderEngineNotify;
+
+/**
+  * IDisplayVideoSourceManager is used to manage a collection of video sources
+  * (from VMR filter).
+  */
+[
+    local,
+    object,
+    uuid(56A32D0E-5649-4b5a-A746-D94E56E9CAF8),
+    helpstring("IDisplayVideoSourceManager Interface"),
+    pointer_default(unique)
+]
+interface IDisplayVideoSourceManager : IUnknown
+{
+	/**
+	  * To add a filter graph as a video source. 
+	  *
+	  * Before this call, correspondent VMR9 filter must be added to its graph 
+	  * and the graph must be rendered and stopped. You must call RemoveVideoSource() method 
+	  * before destroying the graph.
+	  *
+	  * @param pVMR pointer to VMR9 filter of the correspondent subgraph
+	  * @param ppVidSrc return value, the new added video source
+	  *
+	  * @retval E_POINTER if pVMR is NULL or ppVidSrc is NULL
+	  * @retval VFW_E_NOT_STOPPED if correspondent graph is not stopped 
+	  *         or pVMR was not added to the graph, or pVMR is not in the renderless mode
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was not called
+	  * @retval E_FAIL if unexpected error
+	  * @retval E_NOINTERFACE if pVMR does not expose IVMRSurfaceAllocatorNotify9
+	  * @retval E_OUTOFMEMORY if memory allocation error or error code from IVMRSurfaceAllocatorNotify9
+	  *
+	  * @see RemoveVideoSource
+	  */
+    HRESULT AddVideoSource(
+        [in] IBaseFilter* pVMR, 
+        [out] IDisplayVideoSource** ppVidSrc);
+
+	/**
+	  * To remove VMR of particular filter graph (identified by pVidSrc) and 
+	  * unadvises custom allocator-presenter. 
+	  *
+	  * Call this method before destroying correspondent subgraph. Graph must 
+	  * be stopped before calling this method. Pins of the correspondent VMR 
+	  * filter must be disconnected
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  * @retval VFW_E_NOT_STOPPED if graph was not stopped
+	  * @returns E_FAIL or error code of IVMRSurfaceAllocatorNotify9.
+	  *
+	  * @see AddVideoSource
+	  */
+    HRESULT RemoveVideoSource(
+        [in] IDisplayVideoSource* pVidSrc);
+
+	/**
+	  * To obtain the count of video sources.
+	  *
+	  * @param plCount receives the count
+	  *
+	  * @retval E_POINTER if plCount is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+	HRESULT GetVideoSourceCount(
+		[out] LONG* plCount);
+
+	/**
+	  * To obtain the video sources by specified index.
+	  *
+	  * @param lIndex the index of video source
+	  * @param ppVideoSource receives the pointer to video source
+	  *
+	  * @retval E_POINTER if ppVideoSource is NULL
+	  * @retval E_INVALIDARG if lIndex is invalid
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+	HRESULT GetVideoSourceByIndex(
+		[in] LONG lIndex,
+		[out] IDisplayVideoSource** ppVideoSource);
+};
+
+/**
+  * IDisplayServer is the top-level interface of Display Server API. You can get
+  * this interface by CoCreateInstance(CLSID_DisplayServer). Most methods in this
+  * interface are used to manage several VMRs with single rendering environment.
+  */
+[
+    local,
+    object,
+    uuid(32A4CD3D-47C3-476b-B2FF-0A0200080CA9),
+    helpstring("IDisplayServer Interface"),
+    pointer_default(unique)
+]
+interface IDisplayServer : IUnknown
+{
+	enum DisplayServerInitFlags
+	{
+        /**
+          * Don't create render thread to drive rendering loop. The client need to
+          * call IDisplayRenderEngine::Render periodically by itself.
+          */
+		DISPSVR_NO_RENDER_THREAD = 0x01,
+
+		/**
+		  * Don't start rendering immediately after Initialize() is called. Wait for
+		  * IDisplayRenderEngine::EnableRendering.
+		  */
+		DISPSVR_SUSPENDED = 0x02,
+
+		/**
+		  * We might not have a valid window to output. In this case, 
+		  * we might have to render the texture to a render target, used by the caller.
+		  */
+		DISPSVR_NO_WINDOW_OUTPUT = 0x04,
+
+		/**
+		  * Use NvAPI to flip render target onto overlay surface for security. It's only work
+		  * with nVIDIA vgas.
+		  */
+		DISPSVR_USE_CUSTOMIZED_OUTPUT = 0x20,
+
+		/*
+		 * Use our VSync predict function to instead of Present.
+		 * The Present call GetScanLine in busy waiting way and the GetScanLine 
+		 * blocks the GPU. This results in bad DXVA performance.
+		 */
+		DISPSVR_WAITING_FOR_VSYNC = 0x40,
+
+		/*
+		 * Notify and wait for external recovery procedure when device is lost.
+		 * Otherwise, internal recovery procedure should be processed.
+		 */
+		DISPSVR_DEVICE_LOST_NOTIFY = 0x80,
+
+		/*
+		 * Use detection tool to detect if there's any other AP tries to hijack d3d dll.
+		 */
+		DISPSVR_DETECT_D3D_HIJACK = 0x100,
+
+		/*
+		 * Preserve FPU state when creating d3d device.
+		 * Each D3D call process floating point as single precision thus CreateDevice will
+		 * change the FPU state accordingly. If the application needs higher precision, the
+		 * flag is necessary but may incur performance hit for the FPU state change in each
+		 * D3D call.
+		 */
+		DISPSVR_FPU_PRESERVE = 0x200,
+
+		/*
+		 * Set this flag to Initialize will let DispSvr try to use D3D9Ex when possible.
+		 */
+		DISPSVR_USE_D3D9EX = 0x400,
+
+		/*
+		 * Render target virutalization.
+		 */
+		 DISPSVR_USE_RT_VIRTUALIZATION = 0x800,
+
+		/*
+		 * Enable Stencil Buffer
+		 */
+		 DISPSVR_USE_STENCIL_BUFFER = 0x1000,
+
+		/*
+		 * Use Exclusive mode
+		 */
+		 DISPSVR_USE_EXCLUSIVE_MODE = 0x2000,
+
+		 /*
+		 * Use Message thread to handle device lost / reset method.
+		 */
+		 DISPSVR_USE_MESSAGE_THREAD = 0x4000,	
+
+
+		 /*
+		 * Force Disable RTVFromOrigin Position
+		 */
+		 DISPSVR_FORCE_DISABLE_RTV_FROM_ORIGIN	= 0x8000	
+	};
+
+	/**
+      * Configure and initialize internal structures
+	  *
+	  * Call this method right after IDisplayServer object is created to configure 
+	  * and initialize internal structures as well as D3D environment.
+	  *
+	  * @param dwFlags configuration flags
+      * @see DisplayServerInitFlags
+	  * @param hWnd handle to valid video window
+	  * @param pRenderEngine custom render engine (use NULL for default)
+	  *
+	  * @retval E_INVALIDARG (invalid config flags or hWnd), 
+	  * @retval VFW_E_WRONG_STATE if method was already called before
+	  * @retval E_FAIL if unexpected error, 
+	  */
+    HRESULT Initialize(
+        [in] DWORD dwFlags,
+        [in] HWND hWnd,
+        [in] IDisplayRenderEngine* pRenderEngine);
+
+	/**
+	  * Terminate Display Server.
+	  *
+	  * This method must be called before destroying the Display Server.
+	  */
+    HRESULT Terminate();
+
+    /**
+	  * This method is called by the render engine when it loses Direct3D device. The 
+	  * implementation should respond to this event by destroying all video-memory resources.
+	  */
+    HRESULT BeginDeviceLoss();
+
+	/**
+	  * This method is called after the render engine has restored the device. The 
+	  * implementation can re-create resources (including video memory resources) here.
+	  *
+	  * @param pDevice the new device object.
+	  */
+    HRESULT EndDeviceLoss(
+        [in] IUnknown* pDevice);
+
+	/**
+	  * To obtain actively used render engine object. Note that render
+	  * engine can only be specified by Initialize(). In other words, you cannot assign 
+	  * a new render engine without calling Terminate().
+	  *
+	  * @param ppRenderEngine  Pointer to IDisplayRenderEngine
+	  *
+	  * @retval E_POINTER if ppRenderEngine is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  *
+	  * @see Initialize
+	  * @see Terminate
+	  */
+    HRESULT GetRenderEngine(
+        [out] IDisplayRenderEngine** ppRenderEngine);
+
+	/**
+	  * To obtain handle to the message window.
+	  *
+	  * @retval E_POINTER if phwnd is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+	HRESULT GetMessageWindow(
+		[out] HWND* phwnd);
+
+	/**
+	  * To specify handle to the message window.
+	  *
+	  * @retval E_INVALIDARG (invalid hwnd)
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+	HRESULT SetMessageWindow(
+		[in] HWND hwnd);
+};
+
+/**
+  * IDisplayVideoSource represents the filter graph added to Display Server. You can
+  * get this interface by IDisplayVideoSourceManager::GetVideoSourceByIndex.
+  */
+[
+    local,
+    object,
+    uuid(3604A4CC-2610-4ef2-97DB-9FBE7D638E55),
+    helpstring("IDisplayVideoSource Interface"),
+    pointer_default(unique)
+]
+interface IDisplayVideoSource : IUnknown
+{	
+	/**
+	  * Returns pointer to IFilterGraph interface of the sub-graph.
+	  *
+	  * @param ppGraph [out] pointer to IFilterGraph
+	  *
+	  * @retval E_POINTER if ppGraph is NULL,
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT GetGraph(
+        [out] IFilterGraph** ppGraph);
+
+	/**
+	  * This method returns D3D9 texture of the video source.
+	  *
+	  * @param ppTexture pointer to IDirect3DTexture9 that receives texture to be rendered
+	  * @param lpNormRect receives the rectangle of video source
+	  *
+	  * @retval E_POINTER (ppTexture is NULL), 
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  * @retval VFW_E_NOT_FOUND (ID was not found), 
+	  */
+    HRESULT GetTexture(
+        [out] IUnknown** ppTexture,
+		[out] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * To obtain native video size of the video source.
+	  *
+	  * Sizes correspond to VMR9AllocationInfo::dwWidth, VMR9AllocationInfo::dwHeight 
+	  * that is sent to InitializeDevice. See description of 
+	  * VMR9AllocationInfo in the DirectShow SDK documentation for
+	  * other sizes that can be used.
+	  *
+	  * @param plWidth pointer to the variable that receives width
+	  * @param plHeight pointer to the variable that receives height
+	  *
+	  * @retval E_POINTER (either plWidth or plHeight is NULL), 
+	  * @retval VFW_E_NOT_FOUND (ID was not found), 
+	  */
+    HRESULT GetVideoSize(
+        [out] LONG* plWidth,
+        [out] LONG* plHeight,
+		[out] float *pfAspectRatio);
+
+    /**
+      * To attach a VMR filter dynamically.
+      */
+    HRESULT Attach(IBaseFilter* pVMRFilter);
+
+    /**
+      * To detach the attached VMR filter.
+      */
+    HRESULT Detach();
+
+    /**
+      * Notify the begin of rendering operation. This notification is used to prevent overwriting
+      * unrendered frame.
+      */
+	HRESULT BeginDraw();
+
+    /**
+      * Notify the end of rendering operation. This notification is used to prevent overwriting
+      * unrendered frame.
+      */
+	HRESULT EndDraw();
+
+	// A workaround for checking device lost when in DXVA case.
+	HRESULT IsValid();
+
+	// Stop Presenting image
+	HRESULT ClearImage();
+
+    /**
+	  * This method is called by the render engine when it loses Direct3D device. The 
+	  * implementation should respond to this event by destroying all video-memory resources.
+	  */
+    HRESULT BeginDeviceLoss();
+
+	/**
+	  * This method is called after the render engine has restored the device. The 
+	  * implementation can re-create resources (including video memory resources) here.
+	  *
+	  * @param pDevice the new device object.
+	  */
+    HRESULT EndDeviceLoss(
+        [in] IUnknown* pDevice);
+
+	/*
+	 * This method will make the video source to send render and present request when PresentImage()
+	 * is called by VMR9. By default, video source does not send render and present request. 
+	 *
+	 * @param bEnable TRUE to enable sending requests. FALSE to disable it.
+	 */
+	HRESULT EnableInitiativeDisplay(
+		[in] BOOL bEnable);
+};
+
+/**
+  * IDisplayLock is used to synchronize multi-thread access to the display server. 
+  * After calling IDisplayLock::Lock() successfully, the render engine will stop
+  * the rendering until IDisplayLock::Unlock() is called.
+  *
+  * @see IDisplayRenderEngine::GetLock
+  * @remark You can use CAutoDisplayLock to simplify the use of IDisplayLock
+  */
+[
+    local,
+    object,
+    uuid(87A59958-7DF9-4e67-9860-8CFD5054CF1E),
+    helpstring("IDisplayLock Interface"),
+    pointer_default(unique)
+]
+interface IDisplayLock : IUnknown
+{
+    /**
+      * To acquire the lock so that render engine will stop rendering.
+      */
+	HRESULT Lock();
+	
+	/**
+	  * To release the lock so that render engine can continue rendering.
+	  */
+	HRESULT Unlock();
+
+	HRESULT TryLock();
+};
+
+cpp_quote("class CAutoDisplayLock ")
+cpp_quote("{")
+cpp_quote("    CAutoDisplayLock(const CAutoDisplayLock &refAutoLock);")
+cpp_quote("    CAutoDisplayLock &operator=(const CAutoDisplayLock &refAutoLock);")
+cpp_quote("protected:")
+cpp_quote("    IDisplayLock* m_pLock;")
+cpp_quote("public:")
+cpp_quote("    CAutoDisplayLock(IDisplayLock* pLock)")
+cpp_quote("    {")
+cpp_quote("        m_pLock = pLock;")
+cpp_quote("        if (m_pLock)")
+cpp_quote("        {")
+cpp_quote("            m_pLock->AddRef();")
+cpp_quote("            m_pLock->Lock();")
+cpp_quote("        }")
+cpp_quote("    }")
+cpp_quote("    ~CAutoDisplayLock() ")
+cpp_quote("    {")
+cpp_quote("        if (m_pLock)")
+cpp_quote("        {")
+cpp_quote("            m_pLock->Unlock();")
+cpp_quote("            m_pLock->Release();")
+cpp_quote("            m_pLock = NULL;")
+cpp_quote("        }")
+cpp_quote("    }")
+cpp_quote("};")
+
+/**
+  * IDisplayRenderEngine represents the object to perform actual rendering. You can
+  * get this interface by IDisplayServer::GetRenderEngine.
+  */
+[
+    local,
+    object,
+    uuid(D89A29FF-E2C3-4e61-A1D1-C51D177D1200),
+    helpstring("IDisplayRenderEngine Interface"),
+    pointer_default(unique)
+]
+interface IDisplayRenderEngine : IUnknown
+{
+	/**
+	  * Call this method right after IDisplayServer object is created to configure 
+      * and initialize internal structures as well as D3D environment.
+      *
+      * @param hWnd handle to valid video window
+      * @param dwFlags Configuration flags
+	  * @param BackBufferWidth the width of back buffer in pixels
+	  * @param BackBufferHeight the height of back buffer in pixels
+	  * @param pLock the lock for thread synchronization
+      * @retval E_INVALIDARG if invalid config flags or hWnd
+	  * @retval VFW_E_WRONG_STATE if method was already called before
+      */
+    HRESULT Initialize(
+        [in] HWND hWnd,
+		[in] UINT BackBufferWidth, 
+		[in] UINT BackBufferHeight,
+		[in] IDisplayLock* pLock,
+        [in] DWORD dwFlags);
+
+	/**
+	  * Terminate render engine.
+	  */
+    HRESULT Terminate();
+
+	/**
+	  * This method is called from a separate thread asynchronously from VMR calls
+      * First, method checks internal timer, and if it is time to render new scene,
+      * method calls each DO's Render(). We also keep track on
+      * actual FPS rate here
+      *
+      * @retval E_INVALIDARG if invalid config flags or hWnd
+	  * @retval VFW_E_WRONG_STATE if method was already called before
+	  */
+    HRESULT Render();
+
+	/**
+      * Only main video display object should call this method.
+	  *
+	  * @param pObject pointer to main video display object.
+	  * @retval S_OK if updated successfully, otherwise E_FAIL.
+	  */
+	HRESULT UpdateMainVideoTime([in] void *pObject);
+
+	/**
+	  * Responds to the device loss event.
+	  */
+    HRESULT ProcessLostDevice();
+
+	/**
+	  * Get the root of DO tree. 
+      *
+      * @param riid IID to query, such as IID_IParentDisplayObject or IDisplayObject.
+      * @param ppvObject receives the interface pointer.
+      *
+      * @retval E_POINTER if ppvObject is NULL
+	  */
+	HRESULT GetRootObject(
+		[in] REFIID riid, 
+		[out, iid_is(riid)] void** ppvObject);
+
+	/**
+	  * Set the root of DO tree.
+	  */
+	HRESULT SetRootObject(
+		[in] IDisplayObject* pObject);
+
+    /**
+	  * To specify desired frame rate, in (frames per sec)x100.
+	  *
+	  * Render engine will try to keep desired rate, but does not guarantee it,
+	  * use GetFrameRate() to get actual frame rate
+      *
+	  * @retval E_INVALIDARG if nFramesPerSecBy100 is less than 1 or bigger than 100000
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT SetFrameRate(
+		[in] int nFramesPerSecBy100);
+
+	/**
+	  * To obtain actual frame rate (instantaneous from the last rendering),
+	  * in (frames per sec)x100. 
+	  *
+	  * Once started, renderer stops only when destroyed (and if all the subgraphs 
+	  * are idle, it will be drawing last available images), 
+	  *
+	  * @retval E_POINTER if pnFramesPerSecBy100 is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT GetFrameRate(
+		[out] int* pnFramesPerSecBy100);
+
+	/**
+	  * To obtain actual frame rate, smoothed and averaged in time, 
+	  * in (frames per sec)x100. 
+	  *
+	  * Once started, renderer stops only when destroyed 
+	  * (and if all the subgraphs are idle, it will be drawing last available images), 
+	  * so we calculate actual frame rate as
+	  * 
+	  * InterFrameTime_ms = (InterFrameTime_ms * (FramesDrawn-1) + (time_from_the_last_rendering_ms)) / FramesDrawn;
+	  * FrameRateAvg = 100000 / InterFrameTime_ms;
+	  *
+	  * Actual calculations are performed in Render().
+	  *
+	  * @retval E_POINTER if pnFramesPerSecBy100 is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT GetFrameRateAvg(
+		[out] int* pnFramesPerSecBy100);
+
+	/**
+  	  * To obtain flags with which this render engine was initialized
+	  *
+	  * @retval E_POINTER if pdwPrefs is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT GetMixingPrefs(
+        [out] DWORD* pdwPrefs);
+
+	/**
+	  * Called by IDisplayServer when this render engine is advised to the Display Server by 
+	  * SetRenderEngine() method.
+	  *
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT SetDisplayServer(
+		[in] IDisplayServer* pDisplayServer);
+
+	/**
+	  * Obtain pointer to the IDisplayServer object that owns this render engine.
+	  *
+	  * @retval E_POINTER if ppDisplayServer is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT GetDisplayServer(
+		[out] IDisplayServer** ppDisplayServer);
+
+	/**
+	  * To obtain Direct3DDevice9 used for rendering. This device is created 
+	  * by Initialize() method.
+	  *
+	  * @retval E_POINTER if ppDevice is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT Get3DDevice(
+		[out] IUnknown ** ppDevice);
+
+	/**
+	  * To assign Direct3DDevice9 used for rendering. This device is created 
+	  * by caller.
+	  *
+	  * @retval E_POINTER if pDevice is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+	HRESULT Set3DDevice(
+		[in] IUnknown* pDevice);
+
+	/**
+	  * To obtain handle to the video window. This handle is sent to Initialize()
+	  * method.
+	  *
+	  * @retval E_POINTER if phwnd is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT GetDisplayWindow(
+		[out] HWND* phwnd, [out] RECT *pRect);
+
+	/**
+	  * To specify the window to display.
+	  */
+    HRESULT SetDisplayWindow(
+		[in] HWND hwnd, [in] RECT *pRect);
+
+	/**
+	  * Change the width and height of back-buffer. Note that calling this method will
+	  * cause device lost because the 3D device need to be re-created.
+	  */
+	HRESULT SetBackBufferSize(
+		[in] UINT BackBufferWidth, 
+		[in] UINT BackBufferHeight);
+
+	/**
+	  * Get the width and height of back-buffer. 
+	  */
+	HRESULT GetBackBufferSize(
+		[out] UINT* BackBufferWidth, 
+		[out] UINT* BackBufferHeight);
+
+	/**
+	  * To get background color (as RGB value)
+	  *
+	  * @param pColor receives background color
+	  *
+	  * @retval E_POINTER if pColor is NULL
+	  */
+    HRESULT GetBackgroundColor(
+        [out] COLORREF* pColor);
+
+	/**
+	  * To set background color (as RGB value)
+	  *
+	  * @param Color specifies background color
+	  */
+    HRESULT SetBackgroundColor(
+        [in] COLORREF Color);
+
+	/**
+	  * Get the lock to synchronize with rendering loop.
+	  */
+	HRESULT GetLock(
+		[out] IDisplayLock** ppLock);
+
+	/**
+	  * Enable or disable the rendering operations of rendering thread.
+	  */
+	HRESULT EnableRendering(
+		[in] BOOL bEnable);
+
+	/**
+	  * To start the rendering thread if it is not started yet.
+	  *
+	  * @return S_FALSE if the rendering thread is started already.
+	  * @return S_OK if the rendering thread is started successfully.
+	  */
+	HRESULT StartRenderingThread();
+
+	/**
+	  * To stop the rendering thread after it is started yet.
+	  *
+	  * @return S_FALSE if the rendering thread is stopped already.
+	  * @return S_OK if the rendering thread is stopped successfully.
+	  */
+	HRESULT StopRenderingThread();
+
+	enum DisplayRequest
+	{
+		DISPLAY_REQUEST_Render,		//< compositing frame for further presentation.
+		DISPLAY_REQUEST_Present,	//< present previously rendered frame.
+		DISPLAY_REQUEST_FreezeState,	//< freeze renderengine from changing device.
+		DISPLAY_REQUEST_FrameProperty,
+		DISPLAY_REQUEST_AutoRender,
+		DISPLAY_REQUEST_ICT,
+		DISPLAY_REQUEST_DISPMIXERCAPS,	//< check if DispSvr is using custom mixer and its caps.
+		DISPLAY_REQUEST_CustomizedOutput, //< Set to turn on RGBOverlay or not on the fly.
+		DISPLAY_REQUEST_ResetQueue,		//< Reset sort queue
+		DISPLAY_REQUEST_ScreenCaptureDefense, //< Set to turn on DWM protection or not
+		DISPLAY_REQUEST_ClearRenderTarget,    //<Set Clear RT times
+		DISPLAY_REQUEST_ProcessLostDevice, //< Notify DispSvr it's safe to process lost device.
+		DISPLAY_REQUEST_CheckDisplayModeChange, //< Notify DispSvr that Application received WM_DisplayChange event.		
+		DISPLAY_REQUEST_ExclusiveMode, // switch exclusive mode on the fly. param1 = true/false means turning on/off
+		DISPLAY_REQUEST_WaitEngineReady, //wait until RenderEngine ready.
+		DISPLAY_REQUEST_TestCooperativeLevel, //test cooperative level of device,return value is the same with IDirect3DDevice9::TestCooperativeLevel
+		DISPLAY_REQUEST_ClearPresenterBuffer, // clear the backbuffer or the other surfaces in present queue
+		DISPLAY_REQUEST_DWMCompositionChanged, // Notify DispSvr that DWM status changed
+        DISPLAY_REQUEST_VideoFormat, //notify the video format, param1 is an array pointer with 3 DWORD value, index 0: width, 1 : height, 2 : refresh rate
+		DISPLAY_REQUEST_ResetDevice, // notify DispSvr to Reset Device.
+	};
+
+    enum DisplayCustomizdOutputExtension
+    {
+        DISPLAY_CUSTOMIZEDOUTPUT_StereoMode = 0x01,
+        DISPLAY_CUSTOMIZEDOUTPUT_ExclusiveMode = 0x02,
+    };
+	/// Overlay renderer frame property
+	enum OR_FRAME_PROPERTY
+	{
+		OR_FRAME_TOP_FIELD_FIRST		= 0x01,
+		OR_FRAME_BOTTOM_FIELD_FIRST		= 0x02,
+		OR_FRAME_PROGRESSIVE			= 0x04,
+		OR_FRAME_REPEAT_FIRST_FIELD		= 0x08
+	};
+
+    /// Device status
+    enum DISPSVR_DEVICE_STATUS
+	{
+        DISPSVR_DEVICE_S_OK                 = 0x00000000,
+        DISPSVR_DEVICE_E_FAIL		        = 0x80004005,
+		DISPSVR_DEVICE_MIXER_PRESENTER_FAIL	= 0x80000000,		
+	};
+
+    /**
+      * IDisplayObject request render engine to take some actions.
+	  * @param request Request from a IDisplayObject
+      * @see DisplayRequest
+	  * @param param1 Reserved
+	  * @param param2 Reserved
+	  * @param pObject IDisplayObject that submitted request
+      */
+	HRESULT NodeRequest(
+		[in] DWORD request,
+		[in] DWORD param1,
+		[in] DWORD param2,
+		[in] IDisplayObject* pObject);
+
+	/**
+	  * To set the COLORKEY for overlay output. only work in DISPSVR_USE_OVERLAY
+	  * and DISPSVR_UES_CUSTOMIZED_OUTPUT
+	  * 
+	  * @param The colorkey value for the destination overlay surface.
+	  * @return S_OK if colorkey is set successfully, E_FAIL if failed.
+	  */
+	HRESULT SetColorKey(
+		[in] DWORD dwColorKey);
+
+	/**
+	  * To get the COLORKEY for overlay output. only work in DISPSVR_USE_OVERLAY
+	  * and DISPSVR_UES_CUSTOMIZED_OUTPUT
+	  * 
+	  * @param The colorkey value of the destination overlay surface.
+	  * @return S_OK if colorkey is successfully returned, E_FAIL if failed.
+	  */
+	HRESULT GetColorKey(
+		[out] DWORD* pdwColorKey);
+
+	/**
+	  * To obtain handle to the message window.
+	  *
+	  * @retval E_POINTER if phwnd is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+	HRESULT GetMessageWindow(
+		[out] HWND* phwnd);
+
+	/**
+	  * To specify handle to the message window.
+	  *
+	  * @retval E_INVALIDARG (invalid hwnd)
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+	HRESULT SetMessageWindow(
+		[in] HWND hwnd);
+
+	/**
+	  * To get the RecomFPS for overlay output. only work in DISPSVR_UES_CUSTOMIZED_OUTPUT
+	  * 
+	  * @param The RecomFPS value of the destination overlay surface.
+	  * @return S_OK if RecomFPS is successfully returned, E_FAIL if failed.
+	  */
+	HRESULT GetRecomFPS(
+		[out] DWORD* pdwRecomFPS);
+
+	/**
+	  * To get the video pixel area for overlay output. only work in DISPSVR_UES_CUSTOMIZED_OUTPUT (AMD only)
+	  * 
+	  * @param The pdwRecomVideoPixelArea value of the destination overlay surface.
+	  * @return S_OK if RecomVideoPixelArea is successfully returned, E_FAIL if failed.
+	  */
+	HRESULT GetRecomVideoPixelArea(
+		[out] DWORD* pdwRecomVideoPixelArea);
+
+	/**
+	  * Advise to receive RenderEngine event notification. 
+	  */
+	HRESULT AdviseEventNotify(
+		[in] IDispSvrRenderEngineNotify *pEventNotify);
+
+	/**
+	  * UnAdvise to remove RenderEngine event notification. 
+	  */
+	HRESULT UnAdviseEventNotify(
+		[in] IDispSvrRenderEngineNotify *pEventNotify);
+
+	/**
+	  * Process Window Message
+	  * @param are the same as Window Message
+	  * Application should pass through Video display related message to RenderEngine
+	  */
+	HRESULT ProcessWindowMessage(
+		[in] UINT uMsg, [in] WPARAM wParam, [in] LPARAM lParam);
+	/**
+      * Process request from Application.
+      * @param please see DisplayRequest
+      */
+	HRESULT ProcessRequest(
+		[in] DWORD request, [in] DWORD param1, [in] DWORD param2);
+};
+
+/**
+  * Implemented by components that need to receive event from Display Server.
+  */
+[
+    local,
+    object,
+    uuid(6CA13811-C666-4ba2-B9BE-0109B4C121AF),
+    helpstring("IDisplayEventHandler Interface"),
+    pointer_default(unique)
+]
+interface IDisplayEventHandler : IUnknown
+{
+	enum DisplayEvent
+	{
+		/** Main video frame has been prepared by decoder */
+		DISPLAY_EVENT_MainVideoDecoded,
+		DISPLAY_EVENT_EnableRendering,
+		DISPLAY_EVENT_DispSvrMixing,
+		DISPLAY_EVENT_VideoSourceRender,
+		DISPLAY_EVENT_VideoSourcePresent
+	};
+
+    /**
+      * Handle the notifications of display server events
+	  * @param event display event
+      * @see DisplayEvent
+      */
+	HRESULT NotifyEvent(
+		[in] DWORD event,
+		[in] DWORD param1,
+		[in] DWORD param2,
+		[in] LPVOID pInstance);
+};
+
+/**
+  * An interface that allows Display Server to collect callbacks from other components.
+  * Implemented in Render Engine.
+  */
+[
+    local,
+    object,
+    uuid(ECEBF734-BDF3-487d-B84B-DB9EC4E1D514),
+    helpstring("IDisplayEventHost Interface"),
+    pointer_default(unique)
+]
+interface IDisplayEventHost : IUnknown
+{
+    /**
+      * Register to receive display event notification. 
+      */
+	HRESULT Register(
+		[in] IDisplayEventHandler* pHandler,
+		[in] LPVOID pInstance);
+
+    /**
+      * Unregister display event notification. 
+      */
+	HRESULT Unregister(
+		[in] IDisplayEventHandler* pHandler);
+};
+
+/**
+  * IDisplayObject represents the display object (DO) for rendering part of the scene and interaction 
+  * with user.
+  */
+[
+    local,
+    object,
+    uuid(F4B500E2-BD7F-4e2f-863A-1294639D90CE),
+    helpstring("IDisplayObject Interface"),
+    pointer_default(unique)
+]
+interface IDisplayObject : IDisplayEventHandler
+{
+	/**
+	  * This method is called by IDisplayRenderEngine during initialization,
+	  * sets IDisplayRenderEngine object that manages this object.
+	  *
+	  * @param pRenderEngine render engine
+	  *
+	  * @retval E_POINTER if pRenderEngine is NULL.
+	  */
+    HRESULT Initialize(
+        [in] IDisplayRenderEngine* pRenderEngine);
+
+	/**
+	  * Terminate this DO.
+	  */
+    HRESULT Terminate();
+
+	/**
+	  * To obtain pointer to the IDisplayRenderEngine that manages this object.
+	  *
+	  * @param ppRenderEngine render engine
+	  *
+	  * @retval E_POINTER if ppRenderEngine is NULL.
+	  * @retval VFW_E_NOT_FOUND if this object is not connected to any render engine.
+	  */
+    HRESULT GetRenderEngineOwner(
+        [out] IDisplayRenderEngine** ppRenderEngine);
+
+	/**
+	  * To obtain the CLSID of an object type. The client can compare existing object types
+	  * with returned one to know what kind of object it is.
+	  *
+	  * @param pClsid Pointer to a CLSID that contains the Class ID for object type. 
+	  */
+	HRESULT GetCLSID(
+		[out] CLSID* pClsid);
+
+    /**
+	  * This method is called by the video window message processing thread.
+	  *
+	  * @retval SUCCEEDED if the message is processed and should not be propagated to other objects.
+	  * @retval FAILED if the message should be passed to other objects.
+	  */
+    HRESULT ProcessMessage(
+		[in] HWND hWnd, 
+        [in] UINT msg,
+        [in] UINT wParam,
+        [in] LONG lParam);
+
+	/**
+	  * Method makes actual rendering of 3D primitives with applied textures that
+	  * can be video sources. This method is always called from 
+	  * IDisplayRenderEngine::Render with specified in the render engine frame rate.  
+	  * 
+	  * Implement this method to perform customized rendering.
+	  * Please note, that when this method is called, render engine already made
+	  * BeginScene() call to its Direct3D device. It will also call EndScene() after
+	  * all DOs finish their rendering. Do NOT call BeginScene() or EndScene() here!
+	  *
+	  * @param pDevice IDirect3DDevice9 from the render engine
+	  * @param lpParentRect the display rectangle of parent DO in [-1,1]x[1,-1]
+	  *
+	  * @retval S_FALSE if there were errors during rendering
+	  * @retval E_POINTER if pDevice is NULL
+	  * @retval E_UNEXPECTED if unexpected error
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT Render(
+        [in] IUnknown* pDevice,
+        [in] const NORMALIZEDRECT* lpParentRect);
+
+	/**
+	  * This method is called by the render engine when it loses Direct3D device. The 
+	  * implementation should respond to this event by destroying all device-related resources.
+	  */
+    HRESULT BeginDeviceLoss();
+
+	/**
+	  * This method is called after the render engine has restored the device. You 
+	  * can re-create resources (including video memory resources) here.
+	  *
+	  * @param pDevice the new device object.
+	  */
+    HRESULT EndDeviceLoss(
+        [in] IUnknown* pDevice);
+};
+
+/**
+  * IParentDisplayObject has methods to organize DOs as a tree structure.
+  * This interface is implemented by CompositeDisplayObject object.
+  */
+[
+    local,
+    object,
+    uuid(5B26B321-8B17-435c-8390-A3F8378472C1),
+    helpstring("IParentDisplayObject Interface"),
+    pointer_default(unique)
+]
+interface IParentDisplayObject : IDisplayObject
+{
+	/**
+	  * To get the total number of child objects.
+	  *
+      * @retval E_POINTER if plCount is NULL
+	  */
+    HRESULT GetChildCount(
+        [out] LONG* plCount);
+
+	/**
+	  * To obtain pointer to the DO at specified index.
+	  *
+	  * @param lIndex the valid range is 0 to (object_count - 1)
+	  * @param ppObject returns the DO
+	  *
+	  * @retval E_INVALIDARG if lIndex is invalid
+      * @retval E_POINTER if ppUIObject is NULL
+	  */
+    HRESULT GetChild(
+        [in] LONG lIndex,
+        [out] IDisplayObject** ppObject);
+
+	/**
+	  * To find index of specified child object.
+	  *
+	  * @param pObject the DO to find
+	  * @param plIndex returns the index
+	  *
+	  * @retval E_INVALIDARG if pObject is invalid
+      * @retval E_POINTER if plIndex is NULL
+	  */
+    HRESULT IndexOf(
+        [in] IUnknown* pObject,
+		[out] LONG* plIndex);
+
+	/**
+	  * To add a DO.
+	  *
+	  * @param lZOrder specified the z value of newly added DO. The smaller the Z-Order is,
+	  *                 the closer the object is.
+	  * @param pObject the DO to be added
+	  *
+      * @retval E_POINTER if pObject is NULL
+	  */
+    HRESULT AddChild(
+		[in] LONG lZOrder,
+        [in] IUnknown* pObject);
+
+	/**
+	  * To remove specified DO.
+	  *
+	  * @param pObject the DO to be removed.
+	  *
+      * @retval E_INVALIDARG if pObject is not added before.
+	  */
+    HRESULT RemoveChild(
+        [in] IUnknown* pObject);
+
+	/**
+	  * To set Z-Order of a DO.
+	  *
+	  * @param pObject the DO to be moved.
+	  * @param lZOrder the less the value is, the closer this object is to viewer.
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pObject is specified
+	  */
+    HRESULT SetZOrder(
+        [in] IUnknown* pObject,
+		[in] LONG lZOrder);
+
+	/**
+	  * To get Z-Order of a DO.
+	  *
+	  * @param pObject the DO.
+	  * @param plZOrder receives Z-Order
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pObject is specified
+	  */
+    HRESULT GetZOrder(
+        [in] IUnknown* pObject,
+        [out] LONG* plZOrder);
+
+	/**
+	  * To determine parent should render children or not.
+	  *
+	  * @param bShow show state.
+	  */
+    HRESULT Show(
+        [in] BOOL bShow);
+};
+
+/**
+  * IDisplayVideoSink is used to notify initialization and termination of video source.
+  * These events are fired by video sources.
+  *
+  * @remark This interface is only intended to be used internally inside Display Server.
+  */
+[
+    local,
+    object,
+    uuid(1EE35D5C-4DAB-4356-808C-ECC5BA2A19A5),
+    helpstring("IDisplayVideoSink Interface"),
+    pointer_default(unique)
+]
+interface IDisplayVideoSink : IUnknown
+{
+	/**
+	  * Upon this call, this sink should allocate new primitive that
+	  * will be used to draw the source.
+	  * 
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval E_UNEXPECTED if unexpected error
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT OnVideoSourceAdded(
+        [in] IDisplayVideoSource* pVidSrc,
+		[in] FLOAT fAspectRatio);
+
+	/**
+	  * Upon this call, this sink should deletes correspondent primitive from
+	  * the list
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval E_UNEXPECTED if unexpected error
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized  
+	  */
+    HRESULT OnVideoSourceRemoved(
+        [in] IDisplayVideoSource* pVidSrc);
+
+	/**
+	  * To obtain Direct3DDevice9 used for rendering.
+	  *
+	  * @retval E_POINTER if ppDevice is NULL
+	  * @retval VFW_E_WRONG_STATE if method Initialize() was never called
+	  */
+    HRESULT Get3DDevice(
+		[out] IUnknown ** ppDevice);
+};
+
+/**
+  * IDisplayVideoMixer add more functions to IDisplayVideoSourceManager to manage
+  * a collection of video sources. This interface is implemented by DisplayVideoMixer object.
+  */
+[
+    local,
+    object,
+    uuid(8ADD1492-CA9D-42c5-9F0E-4A5D6D9DEFF7),
+    helpstring("IDisplayVideoMixer Interface"),
+    pointer_default(unique)
+]
+interface IDisplayVideoMixer : IDisplayVideoSourceManager
+{
+	/**
+	  * To get output rectangle of a video source, in normalized coordinates
+	  * with respect to the view area.
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  * @param lpNormRect receives output rect
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval E_POINTER if lpNormRect is NULL
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT GetOutputRect(
+        [in] IDisplayVideoSource* pVidSrc,
+        [out] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * To set output rectangle of a video source, in normalized coordinates
+	  * with respect to the view area.
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  * @param lpNormRect specifies output rect
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval E_POINTER if lpNormRect is NULL
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT SetOutputRect(
+        [in] IDisplayVideoSource* pVidSrc,
+        [in] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * To obtain an ideal normalized rectangle that takes 
+	  * maximum space in screen coordinates of the area (dwWidth x dwHeight)
+	  * and maintains video's aspect ratio.
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  * @param dwWidth width, in pixels, of the area where we want to fit the frame
+	  * @param dwHeight height, in pixels, of the area where we want to fit the frame
+	  * @param lpNormRect [out] specifies ideal normalized output rect
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval E_POINTER if lpNormRect is NULL
+	  * @retval E_INVALIDARG if dwWidth = 0 and dwHeight = 0
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT GetIdealOutputRect(
+        [in] IDisplayVideoSource* pVidSrc,
+        [in] DWORD dwWidth,
+        [in] DWORD dwHeight,
+        [out] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * To get Z-Order of a video source, in normalized coordinates
+	  * with respect to the view area.
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  * @param pdwZOrder receives Z-Order
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval E_POINTER (pdwZ is NULL)
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT GetZOrder(
+        [in] IDisplayVideoSource* pVidSrc,
+        [out] DWORD* pdwZOrder);
+
+	/**
+	  * To set Z-Order of a video source, in normalized coordinates
+	  * with respect to the view area. 
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  * @param dwZOrder specifies Z-Order. If dwZ is bigger than the number of primitives mixer 
+	  *        control is processing, it is truncated to the (size_of_the_list - 1)
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT SetZOrder(
+        [in] IDisplayVideoSource* pVidSrc,
+        [in] DWORD dwZOrder);
+
+	/**
+	  * To get alpha-level (transparency) of a video source, normalized 
+	  * to the range [0.0, 1.0].
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  * @param pAlpha receives alpha-level
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval E_POINTER if pAlpha is NULL
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT GetAlpha(
+        [in] IDisplayVideoSource* pVidSrc,
+        [out] float* pAlpha);
+
+	/**
+	  * To set alpha-level (transparency) of a video source, normalized 
+	  * to the range [0.0, 1.0].
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  * @param Alpha specifies alpha-level. Value is always truncated to [0.0, 1.0] range
+	  *
+	  * @retval VFW_E_NOT_FOUND if unknown or invalid pVidSrc is specified
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT SetAlpha(
+        [in] IDisplayVideoSource* pVidSrc,
+        [in] float Alpha);
+
+	/**
+	  * To determine if we should keep aspect ratio of video when drawing
+	  *
+	  * @param pVidSrc the video source that identifies subgraph in the multi-graph environment. 
+	  *        This pointer is assigned in AddVideoSource() method.
+	  * @param bKeepAR specifies to keep aspect ratio or not
+	  *
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+	HRESULT KeepAspectRatio(
+        [in] IDisplayVideoSource* pVidSrc,
+        [in] BOOL bKeepAR);
+};
+
+/**
+  * IDisplayProperties can be used to retrieve/modify various common properties of display object.
+  */
+[
+    local,
+    object,
+    uuid(403A5DE1-A8DA-4b8a-84F9-38A2693E191F),
+    helpstring("IDisplayProperties Interface"),
+    pointer_default(unique)
+]
+interface IDisplayProperties : IUnknown
+{
+	/**
+	  * To get output rectangle of a display object, in normalized coordinates
+	  * with respect to the view area.
+	  *
+	  * @param lpNormRect receives output rect
+	  *
+	  * @retval E_POINTER if lpNormRect is NULL
+	  */
+    HRESULT GetOutputRect(
+        [out] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * To scale output rectangle of a video source, in normalized coordinates
+	  * with respect to the view area.
+	  *
+	  * @param lpNormRect specifies output rect
+	  *
+	  * @retval E_POINTER if lpNormRect is NULL
+	  */
+    HRESULT SetOutputRect(
+        [in] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * To get cropped output rectangle of a video source, in normalized coordinates
+	  * with respect to the scaled area.
+	  *
+	  * @param lpNormRect receives cropped rect
+	  *
+	  * @retval E_POINTER if lpNormRect is NULL
+	  */
+    
+	HRESULT GetCropRect(
+		[out] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * To crop output rectangle of a video source, in normalized coordinates
+	  * with respect to the scaled area.
+	  *
+	  * @param lpNormRect specifies rect to crop
+	  *
+	  * @retval E_POINTER if lpNormRect is NULL
+	  */
+    HRESULT SetCropRect(
+		[in] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * To get Vertex Buffer rectangle, in normalized coordinates
+	  * with respect to the scaled area.
+	  *
+	  * @param lpNormRect receives Vertex Buffer rect
+	  *
+	  * @retval E_POINTER if lpNormRect is NULL
+	  */
+    
+	HRESULT GetVertexBufferRect(
+		[out] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * To get outer frame color (as RGB value)
+	  *
+	  * @param pColor receives background color
+	  *
+	  * @retval E_POINTER if pColor is NULL
+	  */
+	HRESULT GetFrameColor(
+		[out] COLORREF* pColor);
+
+	/**
+	  * To set outer frame color (as RGB value)
+	  *
+	  * @param Color specifies background color
+	  */
+	HRESULT SetFrameColor(
+		[in] COLORREF Color);
+
+	enum DisplayPropertiesCaptureFormat
+	{
+		/** Capture Video Format of HDDVD */
+		DISPPROP_CAPTUREFMT_CVF,
+		/**	JPG format */
+		DISPPROP_CAPTUREFMT_JPG,
+		/** Portable Network Graphics format */
+		DISPPROP_CAPTUREFMT_PNG,	
+	};
+
+	/**
+	  * To capture current display frame
+	  *
+	  * @param dwFormat capture format
+      * @see DisplayPropertiesCaptureFormat
+	  * @param ppFrame output pointer for captured frame
+	  * @param pSize size of ppFrame
+	  *
+	  * @retval E_POINTER if ppFrame is NULL
+	  */
+	HRESULT CaptureFrame(
+		[in] DWORD dwFormat,
+		[out] BYTE** ppFrame,
+		[out] UINT* pSize);
+
+	/**
+	  * To zoom in/out current display frame using given output rectangle. 
+	  * The selected area will extend to entire display area.
+	  * Rect is [-1,1,1,-1]
+	  * 
+	  * @param lpNormRect Indicates the rectangle we are going to zoom
+	  */
+	HRESULT SetZoom(
+		[in] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * Get the rectangle to zoom in/out current display frame. 
+	  * @param lpNormRect returns the rectangle we are going to zoom
+	  */
+	HRESULT GetZoom(
+		[out] NORMALIZEDRECT* lpNormRect);
+
+	/**
+	  * Specify whether this DO should be render or not.
+	  *
+	  * @param bShow show state.  
+	  */
+    HRESULT SetShow(
+        [in] BOOL bShow);
+
+	/**
+	  * Returns whether this DO will be render or not.
+	  *
+	  * @param bShow show state.  
+	  */
+    HRESULT GetShow(
+        [out] BOOL* bShow);
+
+	/**
+	  * Clear buffers of the obj by filling transparent color.
+	  */
+	HRESULT ClearFrame();
+
+	/**
+	  * Find out if a point is located in the display area of the obj.
+	  * This may not necessary when we are rendering to a hWnd.
+	  * If we have pt in rect, we also need to check if display area has been stretched due to 
+	  * aspect ratio. In this case we will re-calculate the pt's position to find out the correct point on the texture.
+	  * 
+	  * @param pPt POINT corresponding to backbuffer size
+	  *
+	  * @retval S_OK if point in display rectangle
+	  * @retval E_FAIL if point is not in display rectangle
+	  */
+	HRESULT ClientToDO(
+		[in, out] POINT* pPt);
+
+	/**
+	  * change Frame Rate
+	  * @param pPt POINT corresponding to backbuffer size
+	  *
+	  * @retval S_OK if 
+	  * @retval E_FAIL if
+	*/
+	HRESULT (SetDispFrameRate)(
+		[in] DWORD	dwFrameRate);
+};
+
+/**
+  * IDisplayOptimizedRender is designed specifically for multi-texture optimization in Direct3D.
+  * A Display Object should implement this interface when its rendering can be done in multi-texture rendering.
+  */
+[
+    local,
+    object,
+    uuid(CEF8B340-07B7-4568-A270-4DB5E6F97099),
+    helpstring("IDisplayOptimizedRender Interface"),
+    pointer_default(unique)
+]
+interface IDisplayOptimizedRender : IUnknown
+{
+	/**
+	  * Special version of IDisplayObject::Render() for multi-texture rendering
+	  *
+	  * @param pDevice IDirect3DDevice9 from the render engine
+	  * @param lTexIndex index of texture to prepare for render
+	  * @param lpParentRect the display rectangle of parent DO in [-1,1]x[1,-1]
+	  *
+	  * @retval S_FALSE if there were errors during rendering
+	  * @retval E_POINTER if pDevice is NULL
+	  * @retval E_UNEXPECTED if unexpected error
+	  * @retval VFW_E_WRONG_STATE if mixer was not initialized
+	  */
+    HRESULT MultiTextureRender(
+        [in] IUnknown* pDevice,
+		[in] LONG lStageIdx,
+		[in] LONG lTexIdx,
+        [in] const NORMALIZEDRECT* lpParentRect);
+
+	/**
+	  * This method is called to get the total number of texture a DO might have.
+	  *
+	  * @retval E_FAIL if not support
+	  */
+	HRESULT GetTextureCount(
+		[out] LONG* plCount);
+
+	/**
+	  * This method is called to get coord of the texture, normally is a rect from (-1,1) to (1,-1).
+	  * Parent object that preform actual rendering has to recalculate the texture rectangle 
+	  * to use the UV format which is from (0,0) to (1,1).
+	  *
+	  * @retval E_FAIL if not support
+	  */
+	HRESULT GetTextureCoord(
+		[in] LONG lIndex,
+		[out] NORMALIZEDRECT* lpNormRect);
+};
+
+enum SERVER_STATE_EVENT
+{
+	SERVER_STATE_RESET,
+	SERVER_STATE_PRESENT,
+	SERVER_STATE_RENDER,
+	SERVER_STATE_VIDEO_SOURCE_ADD,				//< param1 sets the video source ID
+	SERVER_STATE_VIDEO_SOURCE_REMOVE,			//< param1 sets the video source ID
+	SERVER_STATE_VIDEO_SOURCE_PROCESS_INPUT,	//< param1 sets the video source ID
+	SERVER_STATE_VIDEO_SOURCE_PROCESS_OUTPUT,	//< param1 sets the video source ID
+	SERVER_STATE_VIDEO_SOURCE_DROP_INPUT		//< param1 sets the video source ID
+};
+
+/**
+  * IDisplayServerStateEventSink is to collect state or statistic events.
+  */
+[
+    local,
+    object,
+    uuid(3311AD7C-6816-4e83-9DFE-014693C23EED),
+    helpstring("IDisplayServerStateEventSink Interface"),
+    pointer_default(unique)
+]
+interface IDisplayServerStateEventSink : IUnknown
+{
+	/**
+	  * Notify event to event sink
+	  *
+	  * @param eEvent type of state event in SERVER_STATE_EVENT
+	  * @param dwParam1 the first parameter of the event
+	  * @param dwParam2 the second parameter of the event
+	  *
+	  * @retval E_NOTIMPL if the type of event is not supported.
+	  * @retval S_OK if succeeded.
+	  */
+    HRESULT Notify(
+        [in] DWORD eEvent,
+		[in] DWORD dwParam1,
+		[in] DWORD dwParam2);
+
+	/**
+	  * Get server state as text.
+	  *
+	  * @param pText point to the text buffer.
+	  * @param uLength the length of the text buffer.
+	  * @retval S_OK if succeeded.
+	  */
+	HRESULT GetStateText(
+		[in,out] LPTSTR pText,
+		[in] UINT uLength);
+};
+
+/**
+  * IDispSvrRenderEngineNotify is to send render engine notification to registered object.
+  */
+[
+    local,
+    object,
+    uuid(A07658B5-629B-4402-A9EE-8177C8C28E99),
+    helpstring("IDispSvrRenderEngineNotify Interface"),
+    pointer_default(unique)
+]
+interface IDispSvrRenderEngineNotify : IUnknown
+{
+	enum DispSvrEngineEvent
+	{
+		DISPSVR_RENDER_ENGINE_DEVICE_LOST, //Notify when RenderEngine leave device lost state and become not reset state
+		DISPSVR_RENDER_ENGINE_HIJACK_DETECTED, //Notify when RenderEngine detected Hijack state.
+		DISPSVR_RENDER_ENGINE_DEVICE_LOST_DETECTED, //Notify when RenderEngine got device lost state
+		DISPSVR_RENDER_ENGINE_PROCESS_DEVICE_LOST_REQUIRED, //Notify when RenderEngine waits Applicaiton to call process lost device method.
+		DISPSVR_RENDER_ENGINE_DEVICE_RECOVERED, //Notify when RenderEngine finished device recovery.
+		DISPSVR_RENDER_ENGINE_DEVICE_NEED_RESET, // Notify when RenderEngine needs to reset device
+	};
+	/**
+	  * Notify RenderEngine event to application
+	  *
+	  * @param eEvent type of state event in DispSvrRenderEvent
+	  * @param dwParam1 the first parameter of the event
+	  * @param dwParam2 the second parameter of the event
+	  *
+	  * @retval E_NOTIMPL if the type of event is not supported.
+	  * @retval S_OK if succeeded.
+	  */
+    HRESULT OnNotify(
+        [in] DWORD dwEvent,
+		[in] DWORD dwParam1,
+		[in] DWORD dwParam2);
+};
+//////////////////////////////////////////////////////////////////////////////
+// Library and objects
+
+[
+    uuid(10AB37E8-ABEC-49ea-89D1-F27F58779E38),
+    version(1.0),
+    helpstring("DispSvr 1.0 Type Library")
+]
+library DispSvrLib
+{
+    // DisplayServer
+    [
+        uuid(C562E1A9-7DF9-444d-B755-0F502F5351D7),
+        helpstring("DisplayServer Class")
+    ]
+    coclass DisplayServer
+    {
+        [default] interface IDisplayServer;
+    };
+
+    // DisplayRenderEngine
+    [
+        uuid(44E63547-1559-4848-8AA8-E6E14BA8F90B),
+        helpstring("DisplayRenderEngine Class")
+    ]
+    coclass DisplayRenderEngine
+    {
+        [default] interface IDisplayRenderEngine;
+		interface IDisplayVideoSink;
+    };
+
+    // CompositeDisplayObject
+    [
+        uuid(BF7F8E1B-637C-478e-B5DA-492A2D53C698),
+        helpstring("CompositeDisplayObject Class")
+    ]
+    coclass CompositeDisplayObject
+    {
+        [default] interface IDisplayObject;
+        interface IParentDisplayObject;
+    };
+
+	// VideoRootDO
+    [
+        uuid(55F8BDCC-7E1D-4cce-8D74-C9CA69D65ECF),
+        helpstring("VideoRootDisplayObject Class")
+    ]
+    coclass VideoRootDisplayObject
+    {
+        [default] interface IDisplayObject;
+        interface IParentDisplayObject;
+    };
+
+    // ServerStateDisplayObject
+    [
+        uuid(F8713FA2-F3FB-4219-9BDA-CB46B94C43F9),
+        helpstring("ServerStateDisplayObject Class")
+    ]
+    coclass ServerStateDisplayObject
+    {
+        [default] interface IDisplayObject;
+    };
+
+    // ShineDisplayObject
+    [
+        uuid(41D51E09-96FE-48a3-8B5B-70751C7F949A),
+        helpstring("ShineDisplayObject Class")
+    ]
+    coclass ShineDisplayObject
+    {
+        [default] interface IDisplayObject;
+    };
+
+    // DisplayVideoMixer
+    [
+        uuid(CD69D3FC-54E9-42fe-BC31-75C151059AB9),
+        helpstring("DisplayVideoMixer Class")
+    ]
+    coclass DisplayVideoMixer
+    {
+        [default] interface IDisplayVideoMixer;
+		interface IDisplayVideoSink;
+		interface IDisplayObject;
+    };
+
+	// VideoSourceDisplayObject
+	[
+		uuid(DCB56E62-25A0-49b8-B01B-2CA3B765FA67),
+		helpstring("VideoSourceDisplayObject Class")
+	]
+	coclass VideoSourceDisplayObject
+	{
+		[default] interface IDisplayVideoMixer;
+		interface IDisplayVideoSink;
+		interface IDisplayObject;
+	};
+};
+
+
+/**
+  * IDisplayStereoControl can be used to control stereo settings of display object.
+  */
+[
+    local,
+    object,
+    uuid(4E1D464A-AB73-4782-94EF-57ABFFBA4237),
+    helpstring("IDisplayStereoControl Interface"),
+    pointer_default(unique)
+]
+interface IDisplayStereoControl : IUnknown
+{
+	enum StereoDisplayProperties
+	{
+		/** Capture Video Format of HDDVD */
+        STEREO_DISPLAYPROP_NONE,
+        /** Use side by side buffer with left/right view */
+        STEREO_DISPLAYPROP_SIDEBYSIDE_LR,
+        /** Use side by side buffer with right/left view */
+        STEREO_DISPLAYPROP_SIDEBYSIDE_RL,
+        /** Use over-under buffer for left(top)/right(bottom) view */
+        STEREO_DISPLAYPROP_TOPBOTTOM_LR,
+        /** Use under-over buffer for right(top)/left(bottom) view */
+        STEREO_DISPLAYPROP_TOPBOTTOM_RL,
+        /**  Automatically detect LR view the side-by side or top-bottom buffer format */
+        STEREO_DISPLAYPROP_AUTO,
+	};
+
+    /**
+	  * To get stereo display mode of a display object
+      *
+	  * @param stereoDispProp the stereo display mode, see StereoDisplayProperties
+	  *
+      * @retval E_NOTIMPL if the type of event is not supported.
+	  * @retval S_OK if succeeded.
+	  */
+    HRESULT GetStereoDisplayMode(
+        [out] DWORD *dwStereoDispProp);
+
+    /**
+	  * To set stereo display mode of a display object
+      *
+	  * @param stereoDispProp the stereo display mode, see StereoDisplayProperties
+	  *
+      * @retval E_NOTIMPL if the type of event is not supported.
+	  * @retval S_OK if succeeded.
+	  */
+    HRESULT SetStereoDisplayMode(
+        [in] DWORD dwStereoDispProp);
+
+};

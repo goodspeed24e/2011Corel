@@ -1,0 +1,42 @@
+ROOTDIR := ../../../Shared/linux/Makefile
+LIBRARY := libtr
+LIBRARY := $(LIBRARY)
+            
+include $(ROOTDIR)/Makeopts
+include $(PRJDIR)/Makeopts
+
+SOURCES := \
+	IVIScramble.cpp \
+	tr.cpp
+
+SUB_LIBS := 
+ifeq ($(strip $(OPT_TR_ENABLE_NEWMACROS)), true)
+	SUB_LIBS = libtrnewmacro 
+endif
+	
+all: $(LIBRARY).a
+
+#SUB_LIB in LIBTR is provided as a shared binary
+#$(addsuffix .o, $(SUB_LIBS)): force
+#	@$(MAKE) -C $(dir $@) -f Makefile.lin
+
+$(LIBRARY).a: $(OBJECTS) $(addsuffix .o, $(SUB_LIBS))
+	$(AR) cr $@ $^
+	$(RANLIB) $@
+
+
+#.PHONY:  force clean cleanlib
+.PHONY:  force clean
+
+#clean: cleanlib
+clean:
+	@rm -rf $(LIBRARY).a
+	@rm -rf $(LIBRARY).o
+	@rm -rf $(OBJECTS)
+
+#cleanlib:
+#ifeq ($(strip $(OPT_TR_ENABLE_NEWMACROS)), true)
+#	$(MAKE) -C $(dir $(SUB_LIBS)) -f Makefile.lin clean
+#endif
+
+force: ;

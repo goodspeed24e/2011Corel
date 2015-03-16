@@ -1,0 +1,27 @@
+josua (0.5.8) unstable ;urgency=low
+	* updates for libosip-0.8.8
+
+josua (0.5.7) unstable ;urgency=low
+	* updates for libosip-0.8.7 + improvements on exit.
+	* this version has been heavily tested for memory leak by mpatrol...
+
+josua (0.5.5) unstable ;urgency=low
+	* updates for libosip-0.8.5
+	* TODO: BUG NOT FIXED when sending request within a dialog as a callee!
+	   (To and From MUST be reversed!)
+
+josua (0.5.4) unstable ;urgency=low
+	* updates for libosip-0.8.4
+
+josua (0.5.3) testing ;urgency=high
+	* support for CANCEL (the first cancellable request is cancelled!)
+	
+josua (0.5.2) testing ;urgency=high
+	* many things
+	
+josua (0.5.1) testing ;urgency=high
+	* delete memory before exiting (with [Ctrl C] or from the command line).
+	
+josua (0.5.0) testing ;urgency=high
+	* 1st release.
+	* support for INVITE, BYE, OPTIONS, REGISTER

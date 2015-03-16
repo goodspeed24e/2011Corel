@@ -1,0 +1,56 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DispSvr", "DispSvr.vcproj", "{96F6A8A7-0703-4675-A654-A90884F0C94A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94} = {E9609F65-7A84-4D6A-A218-5ED968B96F94}
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3} = {1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibHijackDetect", "Imports\LibHijackDetect\LibHijackDetect.vcproj", "{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibD3D", "Imports\LibD3D\LibD3D.vcproj", "{E9609F65-7A84-4D6A-A218-5ED968B96F94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_Unicode|Win32 = Debug_Unicode|Win32
+		Debug|Win32 = Debug|Win32
+		HotFix|Win32 = HotFix|Win32
+		Release_Unicode|Win32 = Release_Unicode|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.Debug_Unicode|Win32.ActiveCfg = Debug_Unicode|Win32
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.Debug_Unicode|Win32.Build.0 = Debug_Unicode|Win32
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.Debug|Win32.Build.0 = Debug|Win32
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.HotFix|Win32.ActiveCfg = HotFix|Win32
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.HotFix|Win32.Build.0 = HotFix|Win32
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.Release_Unicode|Win32.ActiveCfg = Release_Unicode|Win32
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.Release_Unicode|Win32.Build.0 = Release_Unicode|Win32
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.Release|Win32.ActiveCfg = Release|Win32
+		{96F6A8A7-0703-4675-A654-A90884F0C94A}.Release|Win32.Build.0 = Release|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.Debug_Unicode|Win32.ActiveCfg = Debug_Unicode|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.Debug_Unicode|Win32.Build.0 = Debug_Unicode|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.Debug|Win32.Build.0 = Debug|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.HotFix|Win32.ActiveCfg = Release|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.HotFix|Win32.Build.0 = Release|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.Release_Unicode|Win32.ActiveCfg = Release_Unicode|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.Release_Unicode|Win32.Build.0 = Release_Unicode|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.Release|Win32.ActiveCfg = Release|Win32
+		{1672BBBE-DB96-4BDD-839E-CE0D1906DCA3}.Release|Win32.Build.0 = Release|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.Debug_Unicode|Win32.ActiveCfg = Debug_Unicode|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.Debug_Unicode|Win32.Build.0 = Debug_Unicode|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.Debug|Win32.Build.0 = Debug|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.HotFix|Win32.ActiveCfg = Release|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.HotFix|Win32.Build.0 = Release|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.Release_Unicode|Win32.ActiveCfg = Release_Unicode|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.Release_Unicode|Win32.Build.0 = Release_Unicode|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.Release|Win32.ActiveCfg = Release|Win32
+		{E9609F65-7A84-4D6A-A218-5ED968B96F94}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

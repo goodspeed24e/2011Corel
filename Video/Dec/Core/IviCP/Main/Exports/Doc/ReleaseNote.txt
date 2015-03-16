@@ -1,0 +1,150 @@
+IviCP.dll Release Note
+Ver. 3.0.0.3
+Release Date 2011/04/15
+1. Wrapper for GPUCPService
+
+Ver. 3.0.0.2
+Release Date 2011/04/12
+1.. According to MSDN: http://msdn.microsoft.com/en-us/library/dd317950(VS.85).aspx, we have to add OverlayOrFullscreenRequired flag on fullscreen exclusive mode
+
+Ver. 2.0.0.2
+Release Date 2011/03/29
+1. Ignore the return value of InvalidateStreamKey during close IVICP procedure.
+
+Ver. 2.0.0.1
+Release Date 2010/10/08
+1.Disable D3D9 Authenticated channel when close IVICP
+
+Ver. 1.1.0.24
+Release Date 2010/08/26
+1.Add two GUID - AMD MPEG VLD and AMD MVC
+
+Ver. 1.1.0.24
+Release Date 2010/08/13
+1.Call AMD DRM api twice to workaround driver issue on XP.
+
+Ver. 1.1.0.23
+Release Date 2010/07/01
+1.Follow-up optimized scrambling function over 3 vendor.
+
+Ver. 1.1.0.22
+Release Date 2010/05/24
+1.Using optimized scrambling function on Intel machine.
+
+Ver. 1.1.0.21
+Release Date 2010/05/20
+1.Rollback CL#608957
+
+Ver. 1.1.0.20
+Release Date 2010/05/12
+1.Using optimized scrambling function.
+
+Ver. 1.1.0.19
+Release Date 2010/04/30
+1.Return error message when create session failed.
+
+Ver. 1.1.0.18
+Release Date 2010/03/24
+1.Enable SCD of GPUCP on AMD GPUCP path
+2.Enable SCD of GPUCP on AtiMp2 path
+
+Ver. 1.1.0.17
+Release Date 2010/01/15
+1.Establish PAVP service in Open() function no matter it is called by video or audio.
+
+Ver. 1.1.0.16
+Release Date 2009/12/25
+1.Remove prevent read code
+
+Ver. 1.1.0.15
+Release Date 2009/12/21
+1. fix memory leakage for Dshow mode
+2. fix AP hang when dray AP to secondary monitor
+
+Ver. 1.1.0.14
+Release Date 2009/12/16
+1. rollback CL#585578
+
+Ver. 1.1.0.13
+Release Date 2009/12/10
+1. fix memory leakage for Dshow mode
+
+Ver. 1.1.0.12
+Release Date 2009/12/4
+1. fix memory leakage for those devices that can't support GPUCP.
+
+Ver. 1.1.0.11
+Release Date 2009/11/29
+1. Support Intel AES-NI for Intel PAVP 1.0 and GPUCP.
+
+Ver. 1.1.0.10
+Release Date 2009/11/27
+1. implement EPID class
+2. use EPID for GPUCP 
+
+Ver. 1.1.0.9
+Release Date 2009/11/27
+1. Screen capture defense and prevent read for PCOM FlipEx. PCOM FlipEx is default turn off. 
+2. Prevent read is default turn off for both PCOM overlay and PCOM FlipEx since an green screen issue needs to be fixed.
+
+Ver. 1.1.0.8
+Release Date 2009/10/27
+1.Update PAVP EDIP SDK.
+
+Ver. 1.1.0.6
+Release Date 2009/08/26
+1.Add 3p certificate for Pavp 1.5.
+2.Change cap priority.
+
+Ver. 1.1.0.4
+Release Date 2009/08/25
+1.Modify IsScramblingRequired() of ivicp to query information only
+
+Ver. 1.1.0.3
+Release Date 2009/08/21
+1.Integrate Intel Pavp 1.5 from 1.x into main branch.
+
+Ver. 1.1.0.2
+Release Date 2009/07/29
+1.Use flag to prevent second Release. 
+2.Remove return to prevent lack of Release.
+
+Ver. 1.1.0.1
+Release Date 2009/07/22
+1.set OverlayOrFullscreenRequired while enable protection
+2.reslove memory leakage
+
+Ver. 1.0.0.7
+Release Date 2009/07/17
+1.Rollback code to 1.0.0.3
+1.Remove outputdebugstring in AuthHelper
+
+Ver. 1.0.0.6
+Release Date 2009/07/17
+1.Remove outputdebugstring in AuthHelper
+
+Ver. 1.0.0.5
+Release Date 2009/06/24
+1.Add Intel Pavp 1.5.
+
+Ver. 1.0.0.4
+Release Date 2009/06/23
+
+1. set ref count to 0 in constructor of base class for each object, we increase it in createinstance()
+2. add fixed key for ironlake
+
+Ver. 1.0.0.3
+Release Date 2009/05/11
+
+1. return error if failed to create authenticated channel or crypto session object
+2. add more decode profiles to DecProfileList
+3. Intel doesn't support scrambling for MoComp profile
+
+Ver. 1.0.0.2
+Release Date 2009/04/9
+
+1. fix memory leakage problem by calling base class close procedure, only miss this for win7 gpucp case.
+2. fix refcount problem for intel pavp device
+
+Ver. 1.0.0.1
+Release Date 2009/04/2

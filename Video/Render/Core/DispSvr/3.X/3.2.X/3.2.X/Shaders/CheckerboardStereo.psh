@@ -1,0 +1,33 @@
+// Pixel shader to merge a side by side texture into one checkerboard pattern output.
+
+float4x4 mxWorldViewProj: WORLDVIEWPROJECTION;
+sampler2D texture0;
+
+struct VS_OUT
+{
+	float4 pos : POSITION;
+	float4 tex0 : TEXCOORD0;
+};
+
+VS_OUT MergeSxSCheckerboard_VS(float4 pos : POSITION, float2 tex0 : TEXCOORD0)
+{
+	VS_OUT o;
+	o.pos = mul(pos, mxWorldViewProj);
+	o.tex0 = tex0.xyxy + float4(0, 0, 0.5, 0);
+	return o;
+}
+
+
+// According to http://www.dlp.com/downloads/Introducing%20DLP%203D%20HDTV%20Whitepaper.pdf
+// The checkerboard pattern:
+//   0 1 2
+// 0 L R L
+// 1 R L R
+// 2 L R L
+float4 MergeSxSCheckerboard_PS(float4 texCoord : TEXCOORD0, float4 screenSpace : VPOS) : COLOR
+{
+	float4 leftview = tex2D(texture0, texCoord.xy);
+	float4 rightview = tex2D(texture0, texCoord.zw);
+
+	return (screenSpace.x % 2) == (screenSpace.y % 2) ? leftview : rightview;
+};

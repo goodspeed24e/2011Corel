@@ -1,0 +1,523 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\codedecoder.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#include ""l.chs\\afxprint.rc""        // printing/print preview resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\codedecoder.ico"
+IDI_ICON1               ICON    DISCARDABLE     "res\\animal01.ico"
+IDR_MYTYPE              ICON    DISCARDABLE     "res\\codedecoderDoc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+IDB_car                 BITMAP  DISCARDABLE     "res\\car.bmp"
+BROWSEX                 BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
+BROWSED                 BITMAP  DISCARDABLE     "res\\browsex1.bmp"
+BROWSEF                 BITMAP  DISCARDABLE     "res\\browsex2.bmp"
+BROWSEU                 BITMAP  DISCARDABLE     "res\\browsex3.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+    BUTTON      ID_Encode
+    BUTTON      ID_Decode
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "文件(&F)"
+    BEGIN
+        MENUITEM "新建(&N)\tCtrl+N",            ID_FILE_NEW
+        MENUITEM "打開(&O)...\tCtrl+O",         ID_FILE_OPEN
+        MENUITEM "保存(&S)\tCtrl+S",            ID_FILE_SAVE
+        MENUITEM "另存為(&A)...",               ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "列印(&P)...\tCtrl+P",         ID_FILE_PRINT
+        MENUITEM "列印預覽(&V)",                ID_FILE_PRINT_PREVIEW
+        MENUITEM "列印設置(&R)...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "最近文件",                    ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&X)",                    ID_APP_EXIT
+    END
+    POPUP "執行(&Y)"
+    BEGIN
+        MENUITEM "Encode(&E)",                  ID_Encode
+        MENUITEM "Decode(&J)",                  ID_Decode
+    END
+    POPUP "查看(&V)"
+    BEGIN
+        MENUITEM "工具列(&T)",                  ID_VIEW_TOOLBAR
+        MENUITEM "狀態列(&S)",                  ID_VIEW_STATUS_BAR
+    END
+    POPUP "說明(&H)"
+    BEGIN
+        MENUITEM "關於 編解碼器(&A)...",        ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "E",            ID_Encode,              VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "關於 編解碼器"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDI_ICON1,IDC_STATIC,13,7,20,20
+    LTEXT           "編解碼器版本 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版權所有 (JWP_DGG) 2002.11.6",IDC_STATIC,40,25,137,8
+    DEFPUSHBUTTON   "確定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_EncodeDlg DIALOG DISCARDABLE  0, 0, 220, 164
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "編碼設置"
+FONT 11, "宋体"
+BEGIN
+    LTEXT           "輸入文件類型",IDC_STATIC,30,18,49,8
+    COMBOBOX        IDC_InType,90,17,48,86,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "輸入文件路徑",IDC_STATIC,30,35,49,8
+    EDITTEXT        IDC_InitDir,31,49,148,12,ES_AUTOHSCROLL
+    CONTROL         "Browse",IDC_Browse,"Button",BS_OWNERDRAW | WS_TABSTOP,
+                    182,50,31,11
+    LTEXT           "共有",IDC_STATIC,31,91,17,8
+    EDITTEXT        IDC_MaxFrame,54,89,20,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "影格",IDC_STATIC,77,90,16,8
+    LTEXT           "影格內:",IDC_STATIC,145,97,19,8
+    EDITTEXT        IDC_QPI,168,95,22,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    EDITTEXT        IDC_QP,169,116,22,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    LTEXT           "影格間:",IDC_STATIC,145,117,19,8
+    CONTROL         "相鄰I影格之間插入的P影格個數",IDC_STATIC,"Static",
+                    SS_LEFTNOWORDWRAP | WS_GROUP,22,111,113,8
+    GROUPBOX        "初始量化因子",IDC_STATIC,138,77,58,56
+    CONTROL         "輸出編碼統計結果",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,32,73,76,10
+    EDITTEXT        IDC_Pnum,53,122,22,11,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+END
+
+IDD_DecodeDlg DIALOG DISCARDABLE  0, 0, 187, 98
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "解碼設置"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,130,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,130,24,50,14
+END
+
+IDD_RateControl DIALOG DISCARDABLE  0, 0, 170, 131
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "碼率控制"
+FONT 10, "System"
+BEGIN
+    CONTROL         "碼率控制",IDC_IfRateControl,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,35,19,48,10
+    LTEXT           "信道速率：",IDC_STATIC,35,40,41,8
+    EDITTEXT        IDC_Bitrate,78,38,40,12,ES_RIGHT | ES_AUTOHSCROLL
+    LTEXT           "bps",IDC_STATIC,120,39,13,8
+    GROUPBOX        "影格率",IDC_STATIC,36,61,81,50
+    CONTROL         "25F/s",IDC_frame25,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,58,70,34,10
+    CONTROL         "30F/s",IDC_frame30,"Button",BS_AUTORADIOBUTTON,58,83,34,
+                    10
+    CONTROL         "10F/s",IDC_frame10,"Button",BS_AUTORADIOBUTTON,58,94,34,
+                    10
+END
+
+IDD_Motion DIALOG DISCARDABLE  0, 0, 187, 98
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "運動計算"
+FONT 10, "System"
+BEGIN
+    CONTROL         "單解析度",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,44,18,48,10
+    CONTROL         "多解析度",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,43,35,
+                    48,10
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "視訊編解碼器 Microsoft 基礎類別應用程式\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "視訊編解碼器\0"
+            VALUE "LegalCopyright", "版權所有 (C) 2001\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "視訊編解碼器.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "視訊編解碼器 應用程式\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_EncodeDlg, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 213
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 157
+    END
+
+    IDD_DecodeDlg, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 91
+    END
+
+    IDD_RateControl, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 124
+    END
+
+    IDD_Motion, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 91
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_EncodeDlg DLGINIT
+BEGIN
+    IDC_InType, 0x403, 8, 0
+0x6d62, 0xd070, 0xc1f2, 0x00d0, 
+    IDC_InType, 0x403, 8, 0
+0x5559, 0xce56, 0xbcc4, 0x00fe, 
+    IDC_InType, 0x403, 8, 0
+0x6172, 0xd077, 0xc1f2, 0x00d0, 
+    IDC_InType, 0x403, 9, 0
+0x6973, 0x2066, 0xf2d0, 0xd0c1, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "視訊編解碼器\n\nMy\n\n\nMy.Document\nMy Document"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "視訊編解碼器"
+    AFX_IDS_IDLEMESSAGE     "就緒"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "附檔名"
+    ID_INDICATOR_CAPS       "大寫"
+    ID_INDICATOR_NUM        "數字"
+    ID_INDICATOR_SCRL       "滾動"
+    ID_INDICATOR_OVR        "改寫"
+    ID_INDICATOR_REC        "記錄"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "建立新文件\n新建"
+    ID_FILE_OPEN            "打開一個現有文件\n打開"
+    ID_FILE_CLOSE           "關閉活動文件\n關閉"
+    ID_FILE_SAVE            "保存活動文件\n保存"
+    ID_FILE_SAVE_AS         "將活動文件以一個新文件名保存\n另存為"
+    ID_FILE_PAGE_SETUP      "改變列印選項\n頁面設置"
+    ID_FILE_PRINT_SETUP     "改變印表機及列印選項\n列印選項"
+    ID_FILE_PRINT           "列印活動文件\n列印"
+    ID_FILE_PRINT_PREVIEW   "顯示整頁\n列印預覽"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "顯示程序資訊，本版號及版權\n關於"
+    ID_APP_EXIT             "退出應用程序；提示保存文件\n退出"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "打開該文件"
+    ID_FILE_MRU_FILE2       "打開該文件"
+    ID_FILE_MRU_FILE3       "打開該文件"
+    ID_FILE_MRU_FILE4       "打開該文件"
+    ID_FILE_MRU_FILE5       "打開該文件"
+    ID_FILE_MRU_FILE6       "打開該文件"
+    ID_FILE_MRU_FILE7       "打開該文件"
+    ID_FILE_MRU_FILE8       "打開該文件"
+    ID_FILE_MRU_FILE9       "打開該文件"
+    ID_FILE_MRU_FILE10      "打開該文件"
+    ID_FILE_MRU_FILE11      "打開該文件"
+    ID_FILE_MRU_FILE12      "打開該文件"
+    ID_FILE_MRU_FILE13      "打開該文件"
+    ID_FILE_MRU_FILE14      "打開該文件"
+    ID_FILE_MRU_FILE15      "打開該文件"
+    ID_FILE_MRU_FILE16      "打開該文件"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "切換到下一個窗格\n下一窗格"
+    ID_PREV_PANE            "切换回前一個窗格\n前一窗格"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "將活動的視窗分隔成窗格\n分隔"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "刪除被選對象\n刪除"
+    ID_EDIT_CLEAR_ALL       "全部删除\n全部删除"
+    ID_EDIT_COPY            "複製被選對象並將其置於剪貼簿上\n複製"
+    ID_EDIT_CUT             "剪切被選對象並將其置於剪貼簿上\n剪切"
+    ID_EDIT_FIND            "找尋指定的正文\n找尋"
+    ID_EDIT_PASTE           "插入剪貼簿內容\n黏貼"
+    ID_EDIT_REPEAT          "重複上一步操作\n重複"
+    ID_EDIT_REPLACE         "用不同的正文替換指定的正文\n替换"
+    ID_EDIT_SELECT_ALL      "選擇整個文件\n選擇全部"
+    ID_EDIT_UNDO            "取消最後一步操作\n取消"
+    ID_EDIT_REDO            "重新執行先前已取消的操作\n重新執行"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "顯示或隱藏工具列\n顯隱工具列"
+    ID_VIEW_STATUS_BAR      "顯示或隱藏狀態列\n顯隱狀態列"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "改變視窗大小"
+    AFX_IDS_SCMOVE          "改變視窗位置"
+    AFX_IDS_SCMINIMIZE      "將視窗縮小成圖示"
+    AFX_IDS_SCMAXIMIZE      "把視窗放大到最大尺寸"
+    AFX_IDS_SCNEXTWINDOW    "切換到下一個文件視窗"
+    AFX_IDS_SCPREVWINDOW    "切换到先前的文件視窗"
+    AFX_IDS_SCCLOSE         "關閉活動的視窗並提示報存所有文件"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "把視窗恢復到正常大小"
+    AFX_IDS_SCTASKLIST      "觸發任務表"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "關閉列印預覽模式\n取消預覽"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_Encode               "編碼圖像序列\n編碼"
+    ID_Decode               "解碼壓縮碼流\n解碼"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\codedecoder.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#include "l.chs\afxprint.rc"        // printing/print preview resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

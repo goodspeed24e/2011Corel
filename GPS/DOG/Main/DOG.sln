@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibDOG", "Project\LibDOG.vcproj", "{FE5C8AEC-BF3C-45B0-80F2-CD3C73F12CE4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DOG_DLL", "Project\DOG_DLL.vcproj", "{71913C96-FA05-41F4-B528-C1EB84E6A27C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE5C8AEC-BF3C-45B0-80F2-CD3C73F12CE4} = {FE5C8AEC-BF3C-45B0-80F2-CD3C73F12CE4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibChartCtrl", "Imports\ChartCtrl\LibChartCtrl.vcproj", "{1185DA38-0151-4F1C-959C-39BB8050C2A1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTinyXML", "Imports\TinyXML\LibTinyXML.vcproj", "{7B32DD81-EB26-451E-AB2C-AF348E23A902}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Perf2", "Perf2UI\Perf2.vcproj", "{B658932E-89C0-4435-85BA-B0BE62F2F855}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7B32DD81-EB26-451E-AB2C-AF348E23A902} = {7B32DD81-EB26-451E-AB2C-AF348E23A902}
+		{1185DA38-0151-4F1C-959C-39BB8050C2A1} = {1185DA38-0151-4F1C-959C-39BB8050C2A1}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE5C8AEC-BF3C-45B0-80F2-CD3C73F12CE4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FE5C8AEC-BF3C-45B0-80F2-CD3C73F12CE4}.Debug|Win32.Build.0 = Debug|Win32
+		{FE5C8AEC-BF3C-45B0-80F2-CD3C73F12CE4}.Release|Win32.ActiveCfg = Release|Win32
+		{FE5C8AEC-BF3C-45B0-80F2-CD3C73F12CE4}.Release|Win32.Build.0 = Release|Win32
+		{71913C96-FA05-41F4-B528-C1EB84E6A27C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{71913C96-FA05-41F4-B528-C1EB84E6A27C}.Debug|Win32.Build.0 = Debug|Win32
+		{71913C96-FA05-41F4-B528-C1EB84E6A27C}.Release|Win32.ActiveCfg = Release|Win32
+		{71913C96-FA05-41F4-B528-C1EB84E6A27C}.Release|Win32.Build.0 = Release|Win32
+		{1185DA38-0151-4F1C-959C-39BB8050C2A1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1185DA38-0151-4F1C-959C-39BB8050C2A1}.Debug|Win32.Build.0 = Debug|Win32
+		{1185DA38-0151-4F1C-959C-39BB8050C2A1}.Release|Win32.ActiveCfg = Release|Win32
+		{1185DA38-0151-4F1C-959C-39BB8050C2A1}.Release|Win32.Build.0 = Release|Win32
+		{7B32DD81-EB26-451E-AB2C-AF348E23A902}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7B32DD81-EB26-451E-AB2C-AF348E23A902}.Debug|Win32.Build.0 = Debug|Win32
+		{7B32DD81-EB26-451E-AB2C-AF348E23A902}.Release|Win32.ActiveCfg = Release|Win32
+		{7B32DD81-EB26-451E-AB2C-AF348E23A902}.Release|Win32.Build.0 = Release|Win32
+		{B658932E-89C0-4435-85BA-B0BE62F2F855}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B658932E-89C0-4435-85BA-B0BE62F2F855}.Debug|Win32.Build.0 = Debug|Win32
+		{B658932E-89C0-4435-85BA-B0BE62F2F855}.Release|Win32.ActiveCfg = Release|Win32
+		{B658932E-89C0-4435-85BA-B0BE62F2F855}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,145 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Japanese resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
+#ifdef _WIN32
+LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
+#pragma code_page(932)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Japanese resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_VIDEODIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 405
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 215
+    END
+
+    IDD_DISPSVR_PROPPAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 151
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_VIDEODIALOG DIALOGEX 0, 0, 412, 222
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_DISPSVR_PROPPAGE DIALOGEX 0, 0, 235, 158
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    PUSHBUTTON      "Load Display Server",IDC_LOAD_DISPSVR,154,14,74,14
+    PUSHBUTTON      "Load MS Custom EVR",IDC_LOAD_MS_CUSTOM_EVR,154,40,74,14
+    PUSHBUTTON      "Process Device Lost",IDC_PROCESS_DEVICE_LOST,154,66,74,14
+    EDITTEXT        IDC_EDIT1,135,130,40,14,ES_AUTOHSCROLL | WS_DISABLED
+    GROUPBOX        "DispSvr Init Flag",IDC_STATIC,7,7,121,144
+    CONTROL         "USE D3D9EX",IDC_USE_D3D9EX,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,18,57,10
+    CONTROL         "USE CUSTOMIZED OUTPUT",IDC_USE_CUSTOMIZED_OUTPUT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,36,105,10
+    CONTROL         "USE STECIL BUFFER",IDC_USE_STECIL_BUFFER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,72,82,10
+    CONTROL         "DEVICE LOST NOTIFY",IDC_DEVICE_LOST_NOTIFY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,90,87,10
+    CONTROL         "DETECT_D3D_HIJACK",IDC_DETECT_D3D_HIJACK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,108,86,10
+    CONTROL         "USE RT VIRTUALIZATION",IDC_USE_RT_VIRTUALIZATION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,54,99,10
+    CONTROL         "WAITING FOR VSYNC",IDC_WAITING_FOR_VSYNC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,126,86,10
+    PUSHBUTTON      "Detach Display Server",IDC_DETACH_DISPSVR,154,92,74,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_DISPSVR_PROPPAGE    "DispSvr Property"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

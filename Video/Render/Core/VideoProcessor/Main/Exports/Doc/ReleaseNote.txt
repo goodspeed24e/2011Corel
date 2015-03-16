@@ -1,0 +1,9 @@
+VideoProcessor.dll Release Note
+
+Ver. 0.0.0.1
+Release Date 2008/08/15
+First version: Implement software video processor:
+1. Support median, bob and average de-interlacer.
+2. Support NV12->YUY2, NV12->NV12, NV12->YV12 and YV12->YUY2 color space converter.
+3. Support video color effect.
+4. Optimize render performance with MMX, SSE, and SSE2 Intrinsics.

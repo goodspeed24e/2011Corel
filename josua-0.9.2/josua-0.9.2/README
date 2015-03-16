@@ -1,0 +1,102 @@
+Project    : "Jack's Open SIP User Agent" is a SIP phone.
+Email      : jack@atosc.org
+License    : GPL (http://www.gnu.org)
+Home Page  : http://osip.atosc.org
+Download   : http://osip.atosc.org/osip/download
+
+"Jack's Open SIP User Agent" is a implementation of SIP
+based on the oSIP stack. It implements a SIP phone.
+
+SIP is the Session Initiation Protocol and is described
+by the rfc2543.
+
+Form this early stage, josua can't be used as it is not linked
+with any external application for media exchange!
+
+FEATURES: (version 0.8.8)
+---------
+
+* actual features:
+ * josua is multi-threaded and MUST be used with a multi threaded version
+ of oSIP.
+ * josua supports INVITE, BYE, REGISTER...
+
+* pending features: (unfinished)
+ * support for OPTIONS, any unknown REQUEST.
+ * !!NO MEDIA APPLICATIONS!!.
+
+* future features:
+ * plugin based API for UI (GUI or not...)
+ * plugin based API(?) for media applications.
+
+Documentation:
+--------------
+
+Yet available:
+  *  this README file.
+
+Installation procedure:
+-----------------------
+
+The library is known to compile on various platform:
+  *  GNU/Linux
+	(2.2.16, 2.4.7, 2.4.12, 2.4.17 with gcc 2.95.2)
+	gcc-3.0.3 from libosip-0.7.8
+  *  Windows NT (95, 2000, ???)
+        VC++6.0 (?)
+  *  Unix
+
+Unix and Linux :
+===============>
+
+   $>configure
+   $>make
+   $>make install
+
+I prefer to do:
+
+  $> tar -xvzf josua-0.X.X.tar.gz
+  $> mkdir linux-build
+  $> cd linux-build
+  $> ../josua-0.X.X/configure
+  $> make
+  $> make install
+
+Here is a list of options you can give to the 'configure' command line:
+
+configure --disable-mt             ==> disable any thread support,
+flags: "-UOSIP_MT"
+
+configure --disable-debug          ==> disable debug.
+flags: "-UENABLE_DEBUG"
+
+configure --disable-trace           ==> disable the trace in the logfile.
+flags: "-UENABLE_TRACE"
+
+configure --enable_mleak           ==> enable the memory leak detection.
+flags: "-DENABLE_MLEAK"
+
+configure --enable-pth             ==> use GNU pth library. (never tested yet!)
+flags: "-DTHREAD_PTH -UTHREAD_PTHREAD"
+
+configure --prefix=/your/local     ==> install in '$prefix' (default is /usr/local)
+
+For Windows :
+============>    Makefiles are located in ./windows
+
+
+Contact information:
+--------------------
+
+For more information on the SIP stack, or any contributions,
+you can contact the author at <jack@atosc.org>.
+
+A Mailing list is available for support: <osip@atosc.org>.
+You can subscribe by writing to: <osip-request@atosc.org>
+with a subject set to "subscribe".
+
+Latest version is available at:
+ftp://ftp.gnu.org/gnu/osip
+
+Home page is located at:
+http://www.fsf.org/software/osip/osip.html

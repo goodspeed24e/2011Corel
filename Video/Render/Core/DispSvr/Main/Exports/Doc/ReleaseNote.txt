@@ -1,0 +1,443 @@
+DispSvr SDK Release Note
+
+4.0.0.2
+	- By using DXVA HD to mix UI/OSD, it can resolve most of flicker/frame out of order issues except MPEG2 DXVA on nvidia which is a different driver issue.
+	- change the buffer size for better performance when using overlay
+	- 1. set display size and frame format for video effect processing.
+	- Update NvAPI header and library.
+	- 1. Sync XVE header files with XVEMGR
+	  2. modify wrapper with new interface.
+	  3. Use the same wrapper when set new video effect manager.
+	- Upload XVE header files into import folder.
+	- 1.Implement new wrapper plugin in Mixer and resource manager for IXVideoEffectManager interface pointer.
+	  2.Implement mixer to use new video effect.
+	- Calling Clear API does not work correct on special NV driver(185.xx).
+	  We add to call API ¡V ColorFill for clear render target to avoid this issue.
+	- 1.Implement new interfac of RenderEngine for set/get property.
+	  2.Expose mixer/presenter resource id via new interface.
+	- Fix the side effect of CL#536864, App hang when 4X FF
+	- Check if the surface is still in used in Mixer before return media sample to sample pool
+	- Integrated CL#534700 and CL#534831 from 3.x branch
+	  1.Skip frames if video frame rate higher than display rate.
+	  2.Skip frames to make video sync if delay happened.
+	  It's TVX issue reported by IO-Data. when click start/stop recode button, Video becomes unsync.
+	- Update NVAPI header and library
+	- Add FRUC support in PresenterCaps.
+
+4.0.0.1 
+	- Add DispSvrProxy overlay support and VMR9 on Vista
+	- Fix broken path for XvYCC on vista
+	- Use NVAPI instead of D3D9 Overlay for XvYCC on win7
+	- Add D3DPRESENTFLAG_VIDEO for DXVAHD on Win7
+	- Query driver certain capabilities from intel/nvidia proprietary api in win7 with d3d9 overlay.
+	- DXVA HD: separate data cache and data store to prevent from crashing in certain cases (eg, HD HQV).
+	- Fixed out of range output index in DXVAHD
+	- Add Intel 60 FPS Support
+	- Use YUV format as the media type of custom EVR presenter if mixer supported.
+	- In ATi car and video effect enabled, get texture from texture pool first.
+	- Use StretchRect if surface is progressive to avoid create video processor failed
+	- Clean up effect setting when terminating DispSvr
+	- Recheck-in CL#524993.
+
+3.0.1.43
+	- Rollback CL#524993 to fix bug#76378.
+
+3.0.1.42
+	- Use X8R8G8B8 to create EVR media sample for EVR mixer.
+	- Clear input parameter of EVR GetNativeVideoSize method if media typs is not exist.
+
+3.0.1.41
+	- Display 60 FPS on DS mode with DXVA under XP is the expected default behavior.
+
+3.0.1.40
+	- Support Downsampling Video Effect in DispSvr.dll.
+	- Add methods for VideoEffect3DManager that App can query/get video effect plugin interface by GUID.
+	
+3.0.1.39
+	- Optimize upscaling effect by reduce video memory and DDT path
+	- Optimize pixel shaders and move varying input variables outside of vertex shaders.
+	- Calculate plane's aspect ratio by using plane's mixing area to resolve preview video window incorrect issue.
+
+3.0.1.38
+	- To set the m_bNeedEnableDwmQueuing is false if the vender is not Intel
+	
+3.0.1.37
+	- Opening DWM¡¦s queuing method if vender is Intel
+  
+3.0.1.36
+	- We will check if there happen DeviceLost when got the message "DisplayChange" on D3D/Overlay mode.
+
+3.0.1.35
+	- try XRGB first when creating device to meet Intel d3d9 overlay requirement.
+
+3.0.1.34
+	- Bug#70339, return correct aspect ratio in VMR9 custom persenter
+
+3.0.1.33
+	- Clear Plane garbage when creating new plane.
+	- Set VMR9 filter state as Stop when receiving ClearImage event. the state will be updated when receiving new image.
+	- Use current resolution for back Buffer size,
+	- Disable ZEnable render state before drawing plane.
+	- Correct init flag name : DISPSVR_USE_STENCIL_BUFFER.
+	- Clear non-video area when video position is changed.
+	- Re-check-in Workarround : Don¡¦t release texture actually on this case then NvAPI can work normal. We will release them when we need to release Device.
+
+3.0.1.32
+	- Rollback CL#516783 for check in DispSvr.dll to Windvd10 2.11 branch.
+
+3.0.1.31
+	- Bug#67519 follow up. Add error message if return error.
+	- Workarround : Don¡¦t release texture actually on this case then NvAPI can work normal. We will release them when we need to release Device.
+	- Trigger device lost whenever resolution changes
+	- Fix releasing order of resource manager and renderengine causes crashing or hanging at dispsvr.dll unload, especially during debug.
+	- Workaround for G8x/G9x RGB overlay on XP, which may stop updating in some video only cases.
+	- When disable rendering on VideoSourceDo, ignore update source function.
+
+3.0.1.30
+	- Return correct aspect ratio instead of returning all zero values (EVR/MSEVR).
+	- Can build HotFix dll and rid of D3DX9.dll
+
+3.0.1.29
+	- If device lost, we will try to Reopen EAPI/SORT with M5x. But we have memory leakage, it will cause to fail.
+	- implement InitFlag on Prop Page
+	- implement detach dispsvr and device lost button.
+	- InputFrameOrField parameter is not set correctly in DXVA HD. DispSvr still can't get chapter change information to reset the InputFrameOrField field but at least the value can be incremented during playback.	
+	
+3.0.1.28
+	- Add 5 data tags (#6, 10, 13, 15, 16)(ver.0.2, date:2008-12-5) for monitor by BD+
+
+3.0.1.27
+	- Passing frame format to DXVA HD.
+
+3.0.1.26
+	- Fallback to d3d9 mixing if fast compositing fails.
+	- Calculate exact video area instead of using SetDestination information. SetDestination may affect all planes during mixing.
+
+3.0.1.25
+	- passing incorrect rectangle order to clipping function.
+
+3.0.1.24
+	- Playback using EVR presenter may present at 120Hz or even 240Hz when doing 2X, 4X playback. If over certain frame rate, we don't force all samples to be presented. (drop frame at such a case)
+	- Rollback CL#509815 to fix the side-effect(Bug#68469).
+
+3.0.1.23
+	- Set the variable "nrcZoom" to VideoSourceDo on EVR/VMR9 path to support "Zoom" function in DVD10.
+	- Correct miscalculation of vertex buffer when destination or crop rectangle is not full (0,0 : 1,1).
+	- Use D3DFMT_X8R8G8B8 whenever possible because D3DFMT_A8B8G8R8 may not be supported by all VGA and is not preferred from the feedback of VGA vendor.
+	- Fix side effect of CL#509730.
+
+3.0.1.22
+	- Fix video is not smooth on Cantiga that is because of aligning VSync twice for each display.
+	- Rollback CL#456880 to save video memory usage and improve DispSvr launch time in PCOM/SORT cases.
+	- Implement device lost handling when resolution/display mode change on Vista.
+	- Fix checkmodeswitch return incorrect value in error handling region.
+	- Check if dstrect is valid while perform setVideoPosition function in VMR9/EVR cases.
+
+3.0.1.21
+	- Determine PLANE_INIT_Flag (PARTIAL_BLENDING and FULLSCREEN_MIXING) when creating plane with external surface.
+	- Trigger device lost when receiving power resume messages because DispSvr is unaware of the device changes when system resumes.
+	- Fixed side-effect of CL#459929 which causes Video disappear when using VMR9 custom allocator.
+	- Fix the issue that DWM composites twice while S3 does not set source rectangle correctly in the first pass.
+	- Not using Intel fast compositing on XP because DXVA2 is not available.
+
+3.0.1.20
+	- When using Overlay presenter, reduce 2 screen resolution buffer size. 
+	- Fix DispSvr may create NVAPI twice on normal Nvidia VGA.
+	- Evict resource more strictly and fix the video memory fragmentation problem on ATI.
+	- Re-create dxva2 video processor when video format change.
+	- Call D3DPresentBase first before judge the condition colorkey changed.
+	- Fix VMR9 custom Allocator crash after device lost issue.
+	- Integrate MS EVR custom presenter for future.
+	- Clear Video Mixer plane if VideoSource doesn't have media sample of last frame.
+	- The rectangle of right NonVideoArea is inaccurate, in order to make up this inaccuray left value of this rectangle have to minus one.
+	- Fix NVAPI presenter cannot create overlay after device lost.
+
+3.0.1.19
+	- Update DXVA HD lib for nvidia on vista.
+	- Use DDraw::WaitForVerticalBlank to replace scanline calculation in WinXP.
+	- Fix aspect ratio correction bug.
+
+3.0.1.18
+	- Fix video window has garbage issue after video change aspect ratio in dshow mode.
+	- CIntelFastCompositingMixer::ProcessMessage() will call CD3D9VideoMixerBase::_onMoveWindow() while get MOVEWINDOW message.
+
+3.0.1.17
+	- Fix no video on Cantiga when play DVD
+
+3.0.1.16
+	- Fix video window has garbage issue in dshow mode.
+
+3.0.1.15
+	- Add document and blackboxtest for dispsvr custom presenter in dshow mode.
+	- Optimize dispsvr initialization time.
+	- Expose IDispSvrVideoMixer in dshow via EVR.
+
+3.0.1.14
+	- Update to 3.0.1.14 version because build server can't successfully build 3.0.1.13 version.
+
+3.0.1.13
+	- Update VMR9 and EVR SetAspectRatioMode() function to record aspect ratio mode when app switch option "fixed aspect ratio".
+	- If the plane is created for XGUI, the rect of destination should be equal to screen size in full screen mode.
+
+3.0.1.12
+	- Roll back part of CL#437348 because XGUI menu cannot be shown.
+	- HD resolution includes height = 720.
+	- Clean code and prepare for high DPI awareness by moving common destination/source rectangles calculation to base.
+	- Video effect may changes the source rectangle and should be adjusted by clipping plane if the source rectangle is changed.
+	- Video effects may produce surface with different size from original input surface thus additional source rectangle needs passing to mixing pipeline as well.
+3.0.1.11
+	- Reset D3D Matrix before renderering aovid changed by other component.
+	- Remove the handling of turning DWM Off when video memeory is no more than 128MB
+	- Refine CL#436642, comparing plane.Format with PLANE_FORMAT instead of D3DFORMAT
+	- Fix Double release memory that causes crashes in DispSvr.
+	- Fix DXVA HD stream number exceeds the maxium and causes failure in VideoProcessBltHD.
+	- Change VideoProcessor selection in order to select a better quality de-interlacer.
+	- Add PCOM into VideoProcessorList only if PCOM supports de-interlacing.
+	- Fill RenderTarget format as XRGB for 3rd party mixer's VP.
+	
+3.0.1.10
+	- Fix failed to create DXVA2 Video Processor on some AMD VGA. 
+	- Fix no Video displays when playing DVD titles with custom output.
+	- Avoid blocking mixing if surface is locked.
+	- Support Image capture function.
+	- Fix DispSvr cannot switch to D3D Renderer.
+	- Fix video flash with black screen after time seeking.
+	- Fix S3 chipset supporting 60fps.
+	- Remove PLANE_CAP_HW_PARTIAL_BLENDING flag when using DXVA HD.
+	
+3.0.1.9
+	- Change the header and lib files from S3.
+	- Support to query the GPU_CAPS from API on S3.
+	
+3.0.1.8
+	- Fix crashes because of uninitialized stream data in DXVA HD.
+
+3.0.1.7
+	- Handles backward reference samples when switching between video processors requiring difference numbers of reference samples.
+	- Fix a crash caused by pointers to incorrect past frames in DXVA HD while seeking or changing chapters.
+	- expose capability if video mixer supports partial alpha blending.
+
+3.0.1.6
+	- Enable video effect in PCOM path.
+	- Update lib2d3d.lib to clear alpha channel on output texture because PCOM's fixed pipeline can't disable per pixel alpha.
+	- Remove D3DX9 DLL dependency.
+
+3.0.1.5
+	- Enable video effect 3d pipeline on intel cantiga when using fastcomp.
+	- Choose A8R8G8B8 as default back buffer format.
+	
+3.0.1.4
+	- Fix ap crash when there is no delegate VP.
+
+3.0.1.3
+	- Make multi-plane VP (PCOM, DXVA HD) the preferred VP and delegate certain VP tasks, such as CSC or video effect, to single plane VP before using multi-plane VP.
+	- SCD is deprecated after Win7 and should not be enabled.
+	- Reduce DXVA HD min required stream number to 4.
+	- fix HD video's height in PCOM which should be 720 instead of 1080.
+	- Update DispSvrVideoProcessorCaps test tool to list VP alias names.
+
+3.0.1.2
+	- Remove debug message totally from binary.
+	- Only change DXVA HD stream states when changing.
+	- Use DXVA HD deinterlacer when video format is valid.
+	- Prefer to render to the origin of render target instead of desktop virtualization when presenter can specify source rectangle.
+
+3.0.1.1
+	- Initial check-in of video effect 3D and For3D video effect plugin.
+	- Implement D3D9Overlay and ensure D3D9Overlay can receive related messages.
+	- remove debug string on NOTR(Release) target
+	- update DispSvr_i.c and DispSvr.h
+	- Address a memory leakage in video processor handling.
+
+3.0.0.16
+	- Implement Direct3D exclusive mode.
+	- Update DispSvr IDL file and VideoPresenter header file for exclusive mode.	
+	- Fix releasing AMD PCOM PlugIn may cause memory leak.
+	- Set BT601 color space while playing SD content.
+	- Update test program for IDispSvrVideoProcessor for better readibility.
+	- clean VideoMixer Interface header file.
+
+3.0.0.15
+	- Fix ap crash when failing initializing renderengine.
+	- No long accept PLANE_FORMAT_UNKNOWN as valid plane format.
+	- Add IDispSvrVideoProcessor interface.
+	- Add more test cases and an utility to dump IDispSvrVideoProcessor capabilities.
+
+3.0.0.14
+	- In CD3D9VideoMixerBase::_CreatePlane() function, modify the setting of plane's rcSrc.
+
+3.0.0.13
+	- Don't sync VBlank if LibDisplay use old thread beacuse old display thread has jitter.
+	- Nvidia can't directly transform a partial surface to a texture. Use a temporary buffer to assist the trasformation. This workaround only support in sub-video.
+	- In VMR9 case, add IVMRWindowlessControl9 interface in VideoSourceEx.
+
+3.0.0.12
+	- Remove LibOS project reference in DispSvr.vcproj and DispSvr_VC9.vcproj
+
+3.0.0.11
+	- If samples is the still menu, clear the reference samples.
+	- Input color space is based on bitstream and output color space is based on output monitor.
+	- Always return S_OK no matter DWM is successfully turn off or not.
+	- Check if driver can support YUV to D3DFMT_X8R8G8B8 HW CSC.
+	- Control DWM Composition in ResourceManager.
+	- Turn off DWM Composition if video memory is no more than 128MB.
+	
+3.0.0.10
+	- Optimize p8 pixel shader.
+	- Fix DXVA1 cannot opened on ATI VGA Card. Bypass Format_Unknown parameter at query plane caps method.
+	- Check if reference sample reference time and the current displaying sample are continuous, or reset reference sample pool, especially for reverse playback, fast forward, chapter changing, and frame dropping cases.
+	- Use DXSDKFEB2007INC1 env and D3D9x_32.dll instead of DX9 Prerequisites
+	- Calculate and Clear NonVideoArea.
+	- In EVR case, add IMFVideoDisplayControl interface in VideoSourceEvr.
+
+3.0.0.9
+	- Remove redundant API. Setting invisible plane by calling SetPlanarAlpha() instead of calling SetPlaneVisible().
+	- Fix CaculateDstClipRect() may receive all negative destination rectangle with non-zero area, when window is minimized.
+
+3.0.0.8
+	- Modify DispSvr interface to allow setting mixer plane being visible or invisible.
+	- Correct the condition of unviewable plane for d3d9 mixer and dxva hd mixer.
+	- Fix plane is set to invalid after locking buffer readonly and not passing post filter if locking buffer readonly.
+	- Return error in lockbuffer() when the buffer is being locked
+
+3.0.0.7
+	- Improve the PCOM performance and fix the video jitter on low-end ASIC
+	- Improve NVAPI and D3D Performance by catching up with VSync.
+	- Improve D3D performance when DWM on by enabling Multimedia Class Scheduler Service (MMCSS).
+	- Replace VPBlt with StretchRECT to alleviate GPU loading on Intel G35.
+	- Branch specialized shader for P8 since IG/PG are usually 1920x1080.
+	- Implement bilinear interpolation for P8 shader.
+
+3.0.0.6
+	- Pixel shader for P8 enumeration, add offset to correct palette look-up.
+
+3.0.0.5
+	- Offline shader compiling.
+	- Fix intermediate vblit failure.
+
+3.0.0.4
+	- Address a memory leakage when releasing lockable surfaces.
+	- D3D9 texture origin starts from the center of texel so we should offset vertices to position texture more correctly.
+	- rollback CL#415822 as there may be different consecutive frames with the same pts, especially in menu cases.
+	- Allow partial blending setting in video mixer as well as d3d9 and intel fastcomp support of partial blending.
+	- Transform 32bits color key value to 16bits value if the color depth of monitor is 16bits.
+	- Initial implementation of P8 format support in D3D mixer, intel fastcomp, DXVA HD.
+
+3.0.0.3
+	- Add nvdxvahdapi.lib built in VC9.
+	- Add DxvaHDWrapper to fake microsoft's interfaces while using nvdxvahdapi's implementation.
+
+3.0.0.2
+	- Add Intel PAVP heavy mode support.
+	- Declare novtable in base classes to reduce code size.
+	- cache dxva2 video processor capabilities without recreating processor everytime.
+	- only videoprocessblt if needed when a intermediate buffer is used.
+
+2.0.0.27
+	- Add video input/output frame rates when creating dxva2 videoprocessor.
+
+2.0.0.26
+	- Check device status before presenter clear render target.
+	
+2.0.0.25
+	- Add VC9 solution and project.
+	- Don't reduce ColorFillTimes when presenter return S_FALSE.
+	- Reduce LibD3D project in Imports.
+
+2.0.0.24
+	- Fix compile failed.
+	- Rollback CL#408708 as NV's request.
+	- Always reset transmission states (m_bGamutDataSent), even NvAPI_D3D9_SetGamutData() failed.
+	- Use "#if 0 ... #endif" to replace if(0).
+
+2.0.0.23
+	- Modify DbgMsg function, removing debug message in TR Release build and PDB Release build.
+  
+2.0.0.22
+	- Delay Present to VSync to make it displayed at next VSync
+	- expose more mixer cap.
+	- Notify destination change to the listeners. all planes inside mixer uses the coordinate related to mixer destination but OSD can be outside of video.
+
+2.0.0.21
+	- Roll back CL#408514 to fix wrong device lost issue.
+	- Pass the source rectangle of Present call to IntelFastCompositingMixer in DWM off.
+	
+2.0.0.20
+	- Inform the driver about the XvYcc601/XvYcc709 conversions in DXVAHD.
+	- Treat the driver as no XvYcc support if it failed while calling NvAPI_D3D9_SetGamutData().
+
+2.0.0.19
+	- Correct transformation matrix calculation.
+	- Rollback partial CL#406024 about xvYCC601/xvYCC709 conversion.
+
+2.0.0.18
+	- Fix AP crash issue under dual screen mode (one of the monitor is xvycc supported, one is not).
+
+2.0.0.17
+	- Change the order of Setting HDMI output & Set Gamut packet according NV's suggestion.
+	- Fix NvAPI QueryCaps on different driver versions. Always support DXVA for main video.
+	- Fix side effect for supporting Pan&Scan feature.
+	- Check the os verson, if it's vista that we will open the dxva2 and evr. (.Net framework 3.0 will install dxva2.dll on XP)
+	- Check device state for D3D device and set device lost when receiving mode changed.
+	- Fix the SetScreenCaptureDefense() always return E_FAIL on non Intel vendor.
+	- Release DXVA2 video processor when video planes are released. 
+	- Simplify dxva2 video processing and those cases requiring intermediate surfaces.
+	- Fix memory leakage of ITextureFilter
+
+2.0.0.16
+	- Add xvYcc debug messages for AMD & NVidia.
+	- Fix not reporting correct DualDXVA caps in old NV driver(before Rel173).
+
+2.0.0.15
+  	- Fix custom Video Presenter cannot display on Vista issue.
+  	- Workaround system hangs when playing PIP on 128MB VGA Memory machine
+  
+2.0.0.14
+	- Fixed Bug#50644
+	- Handle SCD extension when there is no fastcomp
+	- Correct luma formulae detection on G35.
+
+2.0.0.13
+	- Fixed Bug#49165, Bug#48509
+	- Delete IntelSCDAPIPresenter because IntelSCDAPIPresenter had merged with IntelFastCompositimgMixer. 
+	- Delete CreateD3DVideoMixer function in D3DDxva2VideoMixer.cpp because it is useless after CL#406215
+	- Enable ScreenCaptureDefence capability only for INTEL
+
+2.0.0.12
+	- Integrate IntelSCDAPIPresenter into component branch
+	- Rearrange dispsvr debug object
+	- Fix regsvr32 hangs on Vista
+
+2.0.0.11
+	- Create DXVAHD YUV overlay only when using xvYcc supported HDMI monitor, otherwise always use RGB overlay.
+	- Add HDMI colorimetry indication to driver.
+	- NVAPICreateVideoBegin/NVAPICreateVideoEnd doesn't occur as a pair while fall back to use original RGB overlay.
+	- Fix the invalid use of "display output id".
+	- Fix crash issue while creating texture without passing Palette info.
+	- Expose scramble capability
+
+2.0.0.10
+	- Fix App crash issue of 2.0.0.9
+
+2.0.0.9
+	- Implement Intel SCD API
+	- Fix NVDXVA2HD doesn't work on 2.0.0.8
+ 	- Add DispSvr Debug Interface
+
+2.0.0.8
+	- Fix SiS chip has a green line on left side of Video when playing 4:3 content
+	- Modify MCOM error handling
+
+2.0.0.7
+	- Implement Multimedia Device Communication API(MCOM).
+	- Fix PCOM rectangle incorrect issue.
+	- Support dynamic video caps query for DualDXVA.
+	- Fix the App crash issue while using previous NV driver with no XvYcc support,
+  
+2.0.0.3
+	- Fix frame disappear when change deinterlace mode.
+	- Implement NVidia DXVAHD support.
+	- Rearrange source code.
+  
+2.0.0.1
+	- Initial version.

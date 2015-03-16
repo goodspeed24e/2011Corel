@@ -1,0 +1,37 @@
+# this file is used to store user config values
+#
+# empty lines are not accepted
+# comments starts with #
+#
+# !!!!!!! extra SPACES may lead to unknown behavior!!!!!!
+#
+# duplicates feilds are discarded...
+# no other restrictions 
+#
+#
+logile=~/.josua/log
+#
+#
+displayname=Aymeric
+username=jack
+localip=127.0.0.1
+#contact for INVITE
+global_contact=<sip:jack@127.0.0.1>
+#contact for REGISTER
+contact=<sip:jack@127.0.0.1>
+expires=3600
+from=<sip:jack@127.0.0.1>
+#
+localport=5060
+#
+# oubound_proxy is a route-set to use for all requests. (outside of a dialog)
+# If you don't provide the lr parameter.. behavior will be VERY strange...
+#
+# outbound_proxy=<sip:192.168.1.114;lr>
+#
+registrar=sip:192.168.1.114
+#
+#SDP config
+networktype=IN
+addr_type=IP4
+#
